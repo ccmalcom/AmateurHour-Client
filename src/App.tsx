@@ -1,26 +1,44 @@
 import React from 'react';
-import logo from './logo.svg';
 import './App.css';
+import Landing from './components/landing/LandingDisplay'
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+type AppState ={
+  sessionToken: string | null
+}
+
+class App extends React.Component<{}, AppState> {
+  constructor(props: {}){
+    super(props);
+    this.state={
+      sessionToken: '' || null
+    }
+    this.updateToken = this.updateToken.bind(this);
+    this.clearSession = this.clearSession.bind(this)
+  }
+
+  componentDidMount(){
+    if(localStorage.getItem('token')){
+      this.setState({sessionToken: localStorage.getItem('token')})
+    }
+  }
+
+  updateToken(newToken: string){
+    localStorage.setItem('token', newToken);
+    this.setState({sessionToken: newToken})
+  }
+
+  clearSession(){
+    localStorage.clear();
+    this.setState({sessionToken: ''})
+  }
+
+  render(){
+    return (
+      <div className="App">
+        <Landing updateToken={this.updateToken}/>
+      </div>
   );
+}
 }
 
 export default App;
