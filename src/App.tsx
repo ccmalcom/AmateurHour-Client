@@ -1,6 +1,8 @@
 import React from 'react';
 import './App.css';
 import Landing from './components/landing/LandingDisplay'
+import NavBar from './components/nav/Nav'
+import {BrowserRouter as Router} from 'react-router-dom'
 
 type AppState ={
   sessionToken: string | null
@@ -32,10 +34,17 @@ class App extends React.Component<{}, AppState> {
     this.setState({sessionToken: ''})
   }
 
+  protectedViews(){
+    return(this.state.sessionToken === localStorage.getItem('token') ? <Router>
+      <NavBar clickLogout={this.clearSession}/>
+      </ Router> 
+      : <Landing updateToken={this.updateToken} /> )
+  }
+
   render(){
     return (
       <div className="App">
-        <Landing updateToken={this.updateToken}/>
+      {this.protectedViews()}
       </div>
   );
 }

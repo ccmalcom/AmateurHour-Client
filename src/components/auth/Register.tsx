@@ -2,19 +2,20 @@ import React from "react";
 
 type AcceptedProps={
     updateToken: (newToken: string) => void,
-    changeView: () => void
+    changeView: () => void,
+    isLoading: () => void
 }
 
 type RegisterState={
     firstName: string,
     lastName: string,
     email: string,
-    zipcode: string, //!should be num
+    zipcode: number, //!should be num
     password: string,
-    instrument: string, //!should be array of strings
-    genre: string, //! should be array of strings
+    instrumentString: string,
+    instrument: Array<string>, //!should be array of strings
+    genre: Array<string>, //! should be array of strings
     admin: string,
-
 }
 
 export default class Register extends React.Component<AcceptedProps, RegisterState>{
@@ -23,11 +24,12 @@ export default class Register extends React.Component<AcceptedProps, RegisterSta
         this.state={
             firstName: '',
             lastName: '',
-            zipcode: '', //!should be num
+            zipcode: 12345, //!should be num
             email: '',
             password: '',
-            instrument: '', //! should be array of strings
-            genre: '', //! should be array of strings
+            instrumentString: '',
+            instrument: ['Trumpet'], //! should be array of strings
+            genre: ['Jazz'], //! should be array of strings
             admin: 'User'
         }
         this.handleSubmit = this.handleSubmit.bind(this)
@@ -35,25 +37,40 @@ export default class Register extends React.Component<AcceptedProps, RegisterSta
 
     handleSubmit(e: any){
         e.preventDefault()
-
+        this.props.isLoading()
+        console.log('handling submit');
+        // this.toArray()
         fetch('https://ccm-amateurhour.herokuapp.com/user/register', {
             method: 'POST',
-            body: JSON.stringify({ //!stringify wont work for zipcode/instrument/genre, how do fix?
+            headers: new Headers({'Content-Type': 'application/json'}),
+            body: JSON.stringify({ //!stringify wont work for instrument/genre, how do fix?
                 user:{
                     firstName: this.state.firstName,
                     lastName: this.state.lastName,
                     zipCode: this.state.zipcode,
-                    email: this.state.email,
+                    emailAddress: this.state.email,
                     password: this.state.password,
-                    instrument: this.state.instrument,
-                    genre: this.state.genre,
+                    instrument:null,
+                    genre: null,
                     admin: this.state.admin
-                }}),
-                headers: new Headers({'Content-Type': 'application/json'})
+                }})
         })
         .then(res => res.json())
+        // .then(console.log)
         .then(data => this.props.updateToken(data.sessionToken))
+        .then(this.props.isLoading)
+        .catch(err => console.log(err))
     }
+
+    toArray(){
+        this.setState({instrument: this.state.instrumentString.split(',')})
+        console.log(this.state.instrument);
+    }
+
+    // handleChange = (e) => {
+    //     let value = Array.from(e.target.selectedOptions, option => option.value);
+    //     this.setState({instrument: value});
+    // }
 
     render(){
         return(
@@ -65,7 +82,7 @@ export default class Register extends React.Component<AcceptedProps, RegisterSta
                     <label htmlFor="lastName">Last Name</label>
                     <input name='lastName' value={this.state.lastName} required onChange={(e) => this.setState({lastName: e.target.value})} />
                     <label htmlFor="zipCode">Zipcode</label>
-                    <input name='zipCode' value={this.state.zipcode} required onChange={(e) => this.setState({zipcode: e.target.value})} />
+                    <input name='zipCode' type='number' value={this.state.zipcode} required onChange={(e) => this.setState({zipcode: Number(e.target.value)})} />
                 </div>
                 <div>
                     <label htmlFor="email">Email</label>
@@ -77,11 +94,17 @@ export default class Register extends React.Component<AcceptedProps, RegisterSta
                 </div>
                 <div>
                     <label htmlFor="instrument">Instrument(s)</label>
-                    <input name='instrument' value={this.state.instrument} required onChange={(e) => this.setState({instrument: e.target.value})} />
+                    {/* <input name='instrument' value={this.state.instrument} required onChange={(e) => this.setState({instrument: e.target.value})} /> */}
+                    {/* <select name="instrument" id="instrument" multiple onChange={(e) => {this.setState({instrumentString: e.target.value})
+                console.log(e.target.options)}}>
+                        <option value="trumpet,">Trumpet</option>
+                        <option value="guitar,">Guitar</option>
+                        <option value="bass,">Bass</option>
+                    </select> */}
                 </div>
                 <div>
                     <label htmlFor="genre">Genre(s)</label>
-                    <input name='genre' value={this.state.genre} required onChange={(e) => this.setState({genre: e.target.value})} />
+                    {/* <input name='genre' value={this.state.genre} required onChange={(e) => this.setState({genre: e.target.value})} /> */}
                 </div>
                 <button type='submit'>Get Started</button>
                 <br />

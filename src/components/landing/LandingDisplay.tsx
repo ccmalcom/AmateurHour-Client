@@ -5,6 +5,7 @@ import styled from 'styled-components';
 import regImg from '../../assets/landing-1.jpg';
 import logImg from '../../assets/landing-2.jpg'
 import logo from '../../assets/logo.png';
+import Loader from 'react-loader-spinner';
 
 const LandingDiv = styled.div`
     display: flex;
@@ -52,21 +53,31 @@ const Heading = styled.h1`
     font-size: calc(36px + 1vw)
 `
 
+const LoaderDiv = styled.div`
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh
+`
+
 type AcceptedProps = {
     updateToken: (newToken: string) => void
 }
 
 type LandingState = {
-    registerView: boolean
+    registerView: boolean,
+    loading: boolean
 }
 
 class Landing extends React.Component<AcceptedProps, LandingState>{
     constructor(props: AcceptedProps) {
         super(props);
         this.state = {
-            registerView: true
+            registerView: true,
+            loading: false
         }
-        this.changeView = this.changeView.bind(this)
+        this.changeView = this.changeView.bind(this);
+        this.isLoading = this.isLoading.bind(this)
     }
 
     changeView() {
@@ -76,41 +87,58 @@ class Landing extends React.Component<AcceptedProps, LandingState>{
         console.log(this.state.registerView);
     }
 
-
+    isLoading() {
+        this.setState((state) => { return { loading: !state.loading } })
+    }
     render() {
 
         return (
             <div>
                 {this.state.registerView ?
-                    <LandingDiv>
-                        <RegLeft>
-                            <Logo src={logo} alt="" />
-                            <Text>40% of people participate in music in
-                                high school, but most of us don't continue
-                                afterwards. In modern American culture,
-                                unless you are a career musician, there are
-                                limited opportunities for continued musical
-                                performance outside of school. AmateurHour
-                                seeks to change that by connecting those of us
-                                who still love to play, but aren't in an orchestra.
-                                <br /> <br /> <br />
-                                Sign up today, and keep playing.
+                    <div>
+                        {this.state.loading ? 
+                        <LoaderDiv>
+                            <Loader type='Audio' color='#FF9F1C' />
+                        </LoaderDiv> 
+                        : 
+                        <LandingDiv>
+                            <RegLeft>
+                                <Logo src={logo} alt="" />
+                                <Text>40% of people participate in music in
+                                    high school, but most of us don't continue
+                                    afterwards. In modern American culture,
+                                    unless you are a career musician, there are
+                                    limited opportunities for continued musical
+                                    performance outside of school. AmateurHour
+                                    seeks to change that by connecting those of us
+                                    who still love to play, but aren't in an orchestra.
+                                    <br /> <br /> <br />
+                                    Sign up today, and keep playing.
                                 </Text>
-                                
-                        </RegLeft>
-                        <Form>
-                            <Register updateToken={this.props.updateToken} changeView={this.changeView} />
-                        </Form>
-                    </LandingDiv>
+
+                            </RegLeft>
+                            <Form>
+                                <Register updateToken={this.props.updateToken} changeView={this.changeView} isLoading={this.isLoading} />
+                            </Form>
+                        </LandingDiv>}
+                    </div>
                     :
-                    <LandingDiv>
-                        <LoginLeft>
-                            <Heading>Good to see you again.</Heading>
-                        </LoginLeft>
-                        <Form>
-                            <Login updateToken={this.props.updateToken} changeView={this.changeView} />
-                        </Form>
-                    </LandingDiv>}
+                    <div>
+                        {this.state.loading ? 
+                        <LoaderDiv>
+                            <Loader type='Audio' color='#FF9F1C' />
+                        </LoaderDiv>                         
+                        :
+                            <LandingDiv>
+                                <LoginLeft>
+                                    <Heading>Good to see you again.</Heading>
+                                </LoginLeft>
+                                <Form>
+                                    <Login updateToken={this.props.updateToken} changeView={this.changeView} isLoading={this.isLoading} />
+                                </Form>
+                            </LandingDiv>}
+                    </div>
+                }
             </div>
         )
     }

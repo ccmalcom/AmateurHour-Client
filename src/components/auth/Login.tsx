@@ -8,7 +8,8 @@ const Logo = styled.img`
 
 type AcceptedProps={
     updateToken: (newToken: string) => void,
-    changeView: () => void
+    changeView: () => void,
+    isLoading: () => void
 }
 
 type LoginState={
@@ -23,22 +24,25 @@ export default class Login extends React.Component<AcceptedProps, LoginState>{
             email: '',
             password: '',
         }
+        this.handleSubmit = this.handleSubmit.bind(this)
     }
 
     handleSubmit(e: any){
         e.preventDefault()
-
+        this.props.isLoading()
         fetch('https://ccm-amateurhour.herokuapp.com/user/login', {
             method: 'POST',
             body: JSON.stringify({
                 user:{
-                    email: this.state.email,
+                    emailAddress: this.state.email,
                     password: this.state.password,
                 }}),
                 headers: new Headers({'Content-Type': 'application/json'})
         })
         .then(res => res.json())
+        // .then(console.log)
         .then(data => this.props.updateToken(data.sessionToken))
+        .then(this.props.isLoading)
     }
 
     render(){
@@ -56,10 +60,9 @@ export default class Login extends React.Component<AcceptedProps, LoginState>{
                 </div>
                 <button type='submit'>Login</button>
                 <br />
+            </form>
                 <p>No account?</p>
                 <button onClick={this.props.changeView}>Register</button>
-
-            </form>
             </div>
         )
     }
