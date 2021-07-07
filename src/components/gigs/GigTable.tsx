@@ -1,6 +1,9 @@
 import React from "react";
-// import GigDisplay from './GigDisplay'
+import styled from 'styled-components';
 
+const ThisGig = styled.div`
+    border: 1px solid black
+`
 
 type AcceptedProps ={
     allGigs:[
@@ -21,20 +24,18 @@ type AcceptedProps ={
 }
 
 const GigTable = (props: AcceptedProps) =>{
-
+    
     const gigMapper = ()=>{
         return props.allGigs.map((gig, index) =>{
             return(
-            <div>
-                <div>
+                <ThisGig>
                     <h3>{gig.title}</h3>
                     <h3>{gig.location}</h3>
                     <h3>{gig.size}</h3>
                     <h3>{gig.instrument}</h3>
                     <h3>{gig.genre}</h3>
                     <h3>{gig.content}</h3>
-                </div>
-            </div>
+                </ThisGig>
             )
         })
     }

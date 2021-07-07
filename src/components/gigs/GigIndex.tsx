@@ -6,7 +6,7 @@ import Loader from 'react-loader-spinner';
 import styled from 'styled-components';
 
 const GigsView = styled.div`
-    height: 100vh;
+    height: 75vh;
     overflow: auto;
     width: 70vw;
     margin: auto
