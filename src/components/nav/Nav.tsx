@@ -13,12 +13,13 @@ const NavBar = (props: any) =>{
     justify-content: space-between;
     width: 100vw;
     height: 60px;
-    background-color: #0f0f0f
+    background-color: #0f0f0f;
+    padding: 0 8%;
     `
 
     const Logo = styled.img`
     height: 50px;
-    width: 200px
+    width: 200px;
     `
 
     const NavLinks = styled.div`

@@ -1,7 +1,7 @@
 import React from "react";
 
 type AcceptedProps={
-    updateToken: (newToken: string) => void,
+    updateToken: (newToken: string, newUserId: number) => void,
     changeView: () => void,
     isLoading: () => void
 }
@@ -57,7 +57,7 @@ export default class Register extends React.Component<AcceptedProps, RegisterSta
         })
         .then(res => res.json())
         // .then(console.log)
-        .then(data => this.props.updateToken(data.sessionToken))
+        .then(data => this.props.updateToken(data.sessionToken, data.user.id))
         .then(this.props.isLoading)
         .catch(err => console.log(err))
     }

@@ -4,12 +4,14 @@ import PostGig from './PostGig';
 import 'react-loader-spinner/dist/loader/css/react-spinner-loader.css'
 import Loader from 'react-loader-spinner';
 import styled from 'styled-components';
+import background from '../../assets/gigs.jpg';
+import GigEdit from './GigEdit';
 
 const GigsView = styled.div`
     height: 75vh;
     overflow: auto;
-    width: 70vw;
-    margin: auto
+    width: 40vw;
+    margin: auto;
 `
 const ButtonDiv = styled.div`
     width: 70vw;
@@ -17,6 +19,17 @@ const ButtonDiv = styled.div`
     margin-bottom: 20px;
     display: flex;
     justify-content: flex-end
+`
+const FullPage = styled.div`
+    height: 100vh;
+    width: 100vw;
+    background-image: url(${background});
+    background-position: center;
+    background-size: cover;
+`
+const H = styled.h1`
+    color: #FF9F1C;
+    padding-top: 30px
 `
 
 type AcceptedProps={
@@ -36,11 +49,35 @@ type GigState ={
             createdAt: string,
             updatedAt: string,
             userId: number,
-            comments: Array<object>
+            posterName: string,
+            comments: [
+                {
+                    id: number,
+                    content: string,
+                    userId: number,
+                    gigId: number,
+                    posterName: string,
+                    createdAt: string,
+                }
+            ]
         }
     ],
     createModalActive: boolean,
-    loading: boolean
+    loading: boolean,
+    gigToEdit: {
+        id: number;
+        location: string;
+        title: string;
+        instrument: Array<string>;
+        genre: Array<string>;
+        size: number;
+        content: string;
+        createdAt: string;
+        updatedAt: string;
+        userId: number;
+        posterName: string,
+    },
+    editModalActive: boolean
 }
 
 export default class GigIndex extends React.Component<AcceptedProps, GigState>{
@@ -59,14 +96,38 @@ export default class GigIndex extends React.Component<AcceptedProps, GigState>{
                     createdAt: '',
                     updatedAt: '',
                     userId: 0,
-                    comments: [{}]
+                    posterName: '',
+                    comments: [{
+                        id: 0,
+                        content: '',
+                        userId: 0,
+                        gigId: 0,
+                        posterName: '',
+                        createdAt: ''
+                    }]
                 }
             ],
             createModalActive: false,
             loading: false,
+            gigToEdit: {
+                id: 0,
+                location: '',
+                title: '',
+                instrument: [''],
+                genre: [''],
+                size: 0,
+                content: '',
+                createdAt: '',
+                updatedAt: '',
+                userId: 0,
+                posterName: ''
+            },
+            editModalActive: false
         }
         this.modalPopup = this.modalPopup.bind(this)
         this.gigFetch = this.gigFetch.bind(this)
+        this.gigToEdit = this.gigToEdit.bind(this)
+        this.editModal = this.editModal.bind(this)
     }
 
     componentDidMount(){
@@ -97,13 +158,33 @@ export default class GigIndex extends React.Component<AcceptedProps, GigState>{
         console.log(this.state.createModalActive);
     }
 
+    gigToEdit(gig: {
+        id: number;
+        location: string;
+        title: string;
+        instrument: Array<string>;
+        genre: Array<string>;
+        size: number;
+        content: string;
+        createdAt: string;
+        updatedAt: string;
+        userId: number;
+        posterName: string
+    }){
+        this.setState(()=>{ return {gigToEdit: gig}})
+        console.log(this.state.gigToEdit);
+    }
+
+    editModal(){
+        this.setState((state)=>{return{editModalActive: !state.editModalActive}})
+    }
+
 
     render(){
         return(
-            <div>
+            <FullPage>
                 {/* <Filter /> */}
-                <h2>Gigs</h2>
-                <br />
+                <H>Gigs</H>
                 <ButtonDiv>
                 <button onClick={this.modalPopup}>+</button>
                 </ButtonDiv>
@@ -115,9 +196,11 @@ export default class GigIndex extends React.Component<AcceptedProps, GigState>{
                 </div>
                 :
                 <GigsView>
-                    <GigTable allGigs={this.state.allGigs}/>
+                    <GigTable allGigs={this.state.allGigs} gigFetch={this.gigFetch} gigToEdit={this.gigToEdit} editModal={this.editModal}/>
                 </GigsView> }
-            </div>
+                {this.state.editModalActive ? <GigEdit editModal={this.editModal} gigToEdit={this.state.gigToEdit} gigFetch={this.gigFetch}/> : null}
+
+            </FullPage>
         )
     }
 

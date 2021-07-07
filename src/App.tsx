@@ -6,13 +6,15 @@ import {BrowserRouter as Router} from 'react-router-dom'
 
 type AppState ={
   sessionToken: string | null
+  sessionUUID: number | null
 }
 
 class App extends React.Component<{}, AppState> {
   constructor(props: {}){
     super(props);
     this.state={
-      sessionToken: '' || null
+      sessionToken: '' || null,
+      sessionUUID: 0 || null
     }
     this.updateToken = this.updateToken.bind(this);
     this.clearSession = this.clearSession.bind(this)
@@ -24,9 +26,10 @@ class App extends React.Component<{}, AppState> {
     }
   }
 
-  updateToken(newToken: string){
+  updateToken(newToken: string, newUserId: number){
     localStorage.setItem('token', newToken);
-    this.setState({sessionToken: newToken})
+    localStorage.setItem('userId', newUserId.toString())
+    this.setState({sessionToken: newToken, sessionUUID: newUserId})
   }
 
   clearSession(){
