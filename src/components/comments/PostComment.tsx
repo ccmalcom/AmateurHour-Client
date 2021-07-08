@@ -38,6 +38,8 @@ export default class PostComment extends React.Component<AcceptedProps, IndexSta
     render(){
         return(
             <div>
+                <hr />
+                <label htmlFor="comment">New Comment:</label>
                 <textarea name="comment" id="comment" onChange={(e)=>{this.setState({content: e.target.value})}}></textarea>
                 <button onClick={(e) =>{this.CommentPost(e)}}>Send</button>
             </div>

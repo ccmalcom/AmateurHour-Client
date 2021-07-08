@@ -43,6 +43,7 @@ export default class Login extends React.Component<AcceptedProps, LoginState>{
         // .then(console.log)
         .then(data => this.props.updateToken(data.sessionToken, data.user.id))
         .then(this.props.isLoading)
+        .catch(err => console.log(err))
     }
 
     render(){

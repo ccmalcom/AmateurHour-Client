@@ -4,6 +4,7 @@ import { UncontrolledDropdown, DropdownToggle, DropdownMenu, DropdownItem } from
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEllipsisH } from "@fortawesome/free-solid-svg-icons";
 import PostComment from "../comments/PostComment";
+import CommentEdit from "./CommentEdit";
 
 const DropdownDiv = styled.div`
     display: flex;
@@ -20,13 +21,28 @@ type AcceptedProps={
             posterName: string,
             createdAt: string
         }],
-    gigFetch: ()=> void
+    gigFetch: ()=> void,
+    gigId: number
 }
 
+type TableState={
+    editOn: boolean
+}
 
-const CommentTable = (props: AcceptedProps) => {
+class CommentTable extends React.Component <AcceptedProps, TableState>{
+    constructor(props: AcceptedProps){
+        super(props)
+        this.state={
+            editOn: false
+        }
+        this.editDisplay = this.editDisplay.bind(this)
+    }
+    
+    editDisplay(){
+        this.setState((state)=>{return{editOn: !state.editOn}})
+    }
 
-    const deleteComment = (commentId: number) =>{
+    deleteComment = (commentId: number) =>{
         fetch(`https://ccm-amateurhour.herokuapp.com/comment/delete/${commentId}`,{
             method: 'DELETE',
             headers: new Headers({
@@ -35,10 +51,10 @@ const CommentTable = (props: AcceptedProps) => {
             })
         })
         .then(res=>console.log(res))
-        .then(()=>{props.gigFetch()})
+        .then(()=>{this.props.gigFetch()})
     }
-    const commentMapper = () =>{
-        return props.comments.map((comment, index) => {
+    commentMapper = () =>{
+        return this.props.comments.map((comment, index) => {
             return (
                 <div>
                     <hr />
@@ -49,11 +65,13 @@ const CommentTable = (props: AcceptedProps) => {
                             </DropdownToggle>
                             <DropdownMenu>
                                 <DropdownItem header>Options</DropdownItem>
-                                <DropdownItem >Edit</DropdownItem>
-                                <DropdownItem onClick={()=>{deleteComment(comment.id)}} >Delete </DropdownItem>
+                                <DropdownItem onClick={()=>{this.editDisplay()}} >Edit</DropdownItem>
+                                <DropdownItem onClick={()=>{this.deleteComment(comment.id)}} >Delete </DropdownItem>
                             </DropdownMenu>
                         </UncontrolledDropdown>
                     </DropdownDiv> : null}
+                    
+                    {this.state.editOn ? <CommentEdit gigFetch={this.props.gigFetch}comment={comment} editDisplay={this.editDisplay}/> : null}
                     <p>{comment.posterName}</p>
                     <p>{comment.createdAt}</p>
                     <p>{comment.content}</p>
@@ -62,11 +80,15 @@ const CommentTable = (props: AcceptedProps) => {
         })
     }
     
+    render(){
+        
         return(
             <div>
-                {commentMapper()}
+                {this.commentMapper()}
+                <PostComment gigId={this.props.gigId} gigFetch={this.props.gigFetch} />
             </div>
         )
+    }
     }
 
 

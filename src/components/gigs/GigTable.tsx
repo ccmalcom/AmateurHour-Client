@@ -8,13 +8,14 @@ import CommentTable from "../comments/CommentTable";
 const ThisGig = styled.div`
     border: 1px solid black;
     margin: 20px 0;
-    background-color: white
+    background-color: white;
+    height: fit-content
 `
 const PostData = styled.div`
 display: flex;
 flex-direction: column;
 justify-content: space-evenly;
-height: 500px;
+height: fit-content;
 `
 
 const DropdownDiv = styled.div`
@@ -65,7 +66,7 @@ type AcceptedProps = {
 }
 
 type TableState = {
-    commentOpen: boolean
+    viewComment: boolean
 }
 
 
@@ -74,16 +75,15 @@ class GigTable extends React.Component<AcceptedProps, TableState>{
     constructor(props: AcceptedProps) {
         super(props)
         this.state = {
-            commentOpen: false,
+            viewComment: false,
         }
-        this.commentToggle = this.commentToggle.bind(this)
+        this.viewCommentToggle = this.viewCommentToggle.bind(this)
     }
 
-    commentToggle() {
-        this.setState((state) => {
-            return { commentOpen: !state.commentOpen }
-        })
+    viewCommentToggle(){
+        this.setState((state)=>{return{viewComment: !state.viewComment}})
     }
+
     deleteGig = (gig: number) => {
         fetch(`https://ccm-amateurhour.herokuapp.com/gig/delete/${gig}`, {
             method: 'DELETE',
@@ -130,18 +130,20 @@ class GigTable extends React.Component<AcceptedProps, TableState>{
                     <footer>
                         <div>
                             <p>Likes</p>
-                            <p>Comments: {gig.comments.length}</p>
+                            <p >Comments: {gig.comments.length}</p>
                         </div>
                         <div>
                             <button>Like</button>
-                            <button onClick={this.commentToggle}>Comment</button>
+                            <button onClick={this.viewCommentToggle}>Comments</button>
                             <button>Share</button>
                         </div>
-                        {this.state.commentOpen ? <PostComment gigId={gig.id} gigFetch={this.props.gigFetch} /> : null}
                     </footer>
                     <div>
+                        {this.state.viewComment ? 
+                        <div>
                         {gig.comments.length > 0 ?
-                            <CommentTable gigFetch={this.props.gigFetch} comments={gig.comments}/> : null}
+                            <CommentTable gigFetch={this.props.gigFetch} comments={gig.comments} gigId={gig.id}/> : 'No comments'}
+                        </div> : null }
 
                     </div>
                 </ThisGig>

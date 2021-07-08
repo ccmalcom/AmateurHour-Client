@@ -1,6 +1,6 @@
 import { Route, Link, Switch } from 'react-router-dom';
 import PeopleDisplay from '../people/PeopleDisplay';
-import ProfileDisplay from '../profile/ProfileDisplay'
+import ProfileIndex from '../profile/ProfileIndex'
 import GigIndex from '../gigs/GigIndex';
 import styled from 'styled-components';
 import logo from '../../assets/logo.png';
@@ -43,7 +43,7 @@ const NavBar = (props: any) =>{
                 <Switch>
                     <Route exact path='/'><GigIndex /></Route>
                     <Route exact path='/people'><PeopleDisplay /></Route>
-                    <Route exact path='/profile'>< ProfileDisplay/></Route>
+                    <Route exact path='/profile'>< ProfileIndex/></Route>
                 </Switch>
             </div>
         </div>

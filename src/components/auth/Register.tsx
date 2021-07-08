@@ -104,7 +104,7 @@ export default class Register extends React.Component<AcceptedProps, RegisterSta
                 </div>
                 <div>
                     <label htmlFor="genre">Genre(s)</label>
-                    {/* <input name='genre' value={this.state.genre} required onChange={(e) => this.setState({genre: e.target.value})} /> */}
+                    <input name='genre' value={this.state.genre} required onChange={(e) => this.setState({genre: Array(e.target.value)})} />
                 </div>
                 <button type='submit'>Get Started</button>
                 <br />
