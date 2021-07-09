@@ -1,4 +1,5 @@
 import React from "react";
+import { Tooltip } from 'reactstrap';
 
 type AcceptedProps={
     updateToken: (newToken: string, newUserId: number) => void,
@@ -16,6 +17,7 @@ type RegisterState={
     instrument: Array<string>, //!should be array of strings
     genre: Array<string>, //! should be array of strings
     admin: string,
+    tooltipOpen: boolean
 }
 
 export default class Register extends React.Component<AcceptedProps, RegisterState>{
@@ -30,11 +32,18 @@ export default class Register extends React.Component<AcceptedProps, RegisterSta
             instrumentString: '',
             instrument: ['Trumpet'], //! should be array of strings
             genre: ['Jazz'], //! should be array of strings
-            admin: 'User'
+            admin: 'User',
+            tooltipOpen: false
         }
         this.handleSubmit = this.handleSubmit.bind(this)
+        this.toggle = this.toggle.bind(this)
     }
 
+    toggle(){
+        this.setState((state)=>{
+            return {tooltipOpen: !state.tooltipOpen}
+        })
+    }
     handleSubmit(e: any){
         e.preventDefault()
         this.props.isLoading()
@@ -90,7 +99,13 @@ export default class Register extends React.Component<AcceptedProps, RegisterSta
                 </div>
                 <div>
                     <label htmlFor="password">Password</label>
-                    <input name='password' type='password' value={this.state.password} required onChange={(e) => this.setState({password: e.target.value})} />
+                    <input name='password' id='password' type='password' pattern='^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9]).{8,}$'value={this.state.password} required onChange={(e) => this.setState({password: e.target.value})} />
+                    <Tooltip placement='right' isOpen={this.state.tooltipOpen} target='password' toggle={this.toggle}>Password must: <ul>
+                        <li>Be at least 8 characters</li>
+                        <li>Contain at least 1 Uppercase letter</li>
+                        <li>Contain at least 1 Number</li>
+                        <li>May contain special characters (not required)</li>
+                        </ul></Tooltip>
                 </div>
                 <div>
                     <label htmlFor="instrument">Instrument(s)</label>
