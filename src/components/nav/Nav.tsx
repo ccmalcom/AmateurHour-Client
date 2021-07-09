@@ -1,5 +1,5 @@
 import { Route, Link, Switch } from 'react-router-dom';
-import PeopleDisplay from '../people/PeopleDisplay';
+import PeopleIndex from '../people/PeopleIndex';
 import ProfileIndex from '../profile/ProfileIndex'
 import GigIndex from '../gigs/GigIndex';
 import styled from 'styled-components';
@@ -42,7 +42,7 @@ const NavBar = (props: any) =>{
             <div>
                 <Switch>
                     <Route exact path='/'><GigIndex /></Route>
-                    <Route exact path='/people'><PeopleDisplay /></Route>
+                    <Route exact path='/people'><PeopleIndex /></Route>
                     <Route exact path='/profile'>< ProfileIndex/></Route>
                 </Switch>
             </div>

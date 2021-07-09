@@ -1,7 +1,5 @@
 import React from 'react';
-import { Button, Form, FormGroup, Label, Input, Modal, ModalHeader, ModalBody, ModalFooter, } from "reactstrap";
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faArrowAltCircleLeft } from '@fortawesome/free-solid-svg-icons';
+
 
 type AcceptedProps ={
     comment: {
@@ -16,7 +14,7 @@ type EditState={
     content: string
 }
 
-export default class CommentEdit extends React.Component<AcceptedProps, EditState>{
+export default class UCommentEdit extends React.Component<AcceptedProps, EditState>{
     constructor(props: AcceptedProps){
         super(props)
         this.state={

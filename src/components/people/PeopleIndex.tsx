@@ -1,29 +1,29 @@
 import React from "react";
-import UserProfile from "./UserProfile";
-import styled from "styled-components";
-import UGigIndex from "./userGigs/UGigIndex";
-import ProfileEdit from "./ProfileEdit";
+import PeopleTable from "./PeopleTable";
+import styled from 'styled-components'
+import background from '../../assets/people-background.jpg'
 
 const FullPage = styled.div`
     height: calc(100vh - 60px);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background-color: #707070
+    width: 100vw;
+    background-image: url(${background});
+    background-position: center;
+    background-size: cover;
+
 `
-const PostsBox = styled.div`
-    margin-left: 10px;
+const PeopleView = styled.div`
     height: 80vh;
-    border: 1px solid black;
-    width: 50vw;
-    background-color: #FDFFFC
+    overflow: auto;
+    width: 82vw;
+    margin: auto
 `
-type AcceptedProps = {
+const H = styled.h1`
+    color: #FF9F1C;
+    padding: 30px 0
+`
 
-}
-
-type IndexState = {
-    userData: {
+type PeopleState = {
+    userData: [{
         id: number,
         firstName: string,
         lastName: string,
@@ -47,15 +47,14 @@ type IndexState = {
                 createdAt: string
             }
         ]
-    },
-    editModalActive: boolean
+    }],
 }
 
-export default class ProfileIndex extends React.Component<AcceptedProps, IndexState>{
-    constructor(props: AcceptedProps) {
+export default class PeopleIndex extends React.Component<{}, PeopleState>{
+    constructor(props: {}) {
         super(props)
         this.state = {
-            userData: {
+            userData: [{
                 id: 0,
                 firstName: '',
                 lastName: '',
@@ -79,20 +78,16 @@ export default class ProfileIndex extends React.Component<AcceptedProps, IndexSt
                         createdAt: "",
                     }
                 ]
-            },
-            editModalActive: false,
+            }]
         }
-        this.editModal = this.editModal.bind(this)
-        this.getUserInfo = this.getUserInfo.bind(this)
     }
+
     componentDidMount() {
-        this.getUserInfo()
+        this.fetchPeople()
     }
 
-
-    getUserInfo() {
-        console.log('getting user info');
-        fetch(`https://ccm-amateurhour.herokuapp.com/user/view/${localStorage.userId}`, {
+    fetchPeople() {
+        fetch(`https://ccm-amateurhour.herokuapp.com/user/view`, {
             method: 'GET',
             headers: new Headers({
                 'Content-Type': 'application/json',
@@ -100,23 +95,18 @@ export default class ProfileIndex extends React.Component<AcceptedProps, IndexSt
             })
         })
             .then(res => res.json())
-            .then(userData =>  this.setState({ userData: userData }))
-            .then(()=>{console.log(this.state.userData)})
+            .then((userData) => { this.setState({ userData: userData }) })
+            .then(() => { console.log(this.state.userData) })
             .catch(err => console.log(err))
-    }
-    editModal(){
-        this.setState((state)=>{return{editModalActive: !state.editModalActive}})
     }
     render() {
         return (
             <FullPage>
-                <UserProfile userData={this.state.userData} editModal={this.editModal}/>
-                <PostsBox>
-                    <UGigIndex />
-                </PostsBox>
-                {this.state.editModalActive ? 
-                <ProfileEdit userData={this.state.userData} editModal={this.editModal} userFetch={this.getUserInfo}/>
-                : null }
+                <H>People</H>
+
+                <PeopleView>
+                    <PeopleTable userData={this.state.userData} />
+                </PeopleView>
             </FullPage>
         )
     }

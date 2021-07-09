@@ -1,7 +1,7 @@
 import React from "react";
 import styled from 'styled-components';
-import Comment from "./Comment";
-import PostComment from "../comments/PostComment";
+import UComment from "./UComment";
+import UPostComment from "./UPostComment";
 
 type AcceptedProps={
     comments: [
@@ -17,9 +17,6 @@ type AcceptedProps={
     gigId: number
 }
 
-type TableState={
-    editOn: boolean
-}
 
 const CommentTable=(props: AcceptedProps)=>{
     
@@ -37,7 +34,7 @@ const CommentTable=(props: AcceptedProps)=>{
     }
     const commentMapper = () =>{
         return props.comments.map((comment, index) => {
-            return <Comment gigId={props.gigId} comment={comment} deleteComment={deleteComment} gigFetch={props.gigFetch}/>
+            return <UComment comment={comment} deleteComment={deleteComment} gigFetch={props.gigFetch} gigId={props.gigId}/>
         })
     }
     
@@ -47,7 +44,7 @@ const CommentTable=(props: AcceptedProps)=>{
                 {props.comments.length > 0 ?
                 <div>{commentMapper()}</div> : 'No Comments'
                 }
-                <PostComment gigId={props.gigId} gigFetch={props.gigFetch} />
+                <UPostComment gigId={props.gigId} gigFetch={props.gigFetch} />
             </div>
         )
     }

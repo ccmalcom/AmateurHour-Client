@@ -1,9 +1,9 @@
-import React from "react";
-import { Button, Form, FormGroup, Label, Input, Modal, ModalHeader, ModalBody, ModalFooter, } from "reactstrap";
+import React from 'react';
+import { Button, Form, FormGroup, Label, Input, Modal, ModalHeader, ModalBody, } from "reactstrap";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowAltCircleLeft } from '@fortawesome/free-solid-svg-icons';
 
-type PostState={
+type EditState ={
     title: string,
     location: string,
     size: number,
@@ -13,34 +13,46 @@ type PostState={
 }
 
 type AcceptedProps={
-    modalPopup:()=> void,
-    gigFetch: ()=> void
+    editModal: () => void,
+    gigToEdit: {
+        id: number;
+        location: string;
+        title: string;
+        instrument: Array<string>;
+        genre: Array<string>;
+        size: number;
+        content: string;
+        createdAt: string;
+        updatedAt: string;
+        posterName: string,
+        userId: number;}
+    gigFetch: () => void
 }
 
-export default class PostGig extends React.Component<AcceptedProps, PostState>{
+export default class GigEdit extends React.Component<AcceptedProps, EditState>{
     constructor(props: AcceptedProps){
         super(props)
         this.state={
-            title: '',
-            location: '',
-            size: 0,
-            instruments: [''],
-            genre: [''],
-            content: ''
+            title: props.gigToEdit.title,
+            location: props.gigToEdit.location,
+            size: props.gigToEdit.size,
+            instruments: props.gigToEdit.instrument,
+            genre: props.gigToEdit.genre,
+            content: props.gigToEdit.content
         }
-        this.postGig = this.postGig.bind(this)
+        this.gigUpdate = this.gigUpdate.bind(this)
     }
 
-    postGig(e: any){
+    gigUpdate(e: any){
         e.preventDefault()
-        this.props.modalPopup()
-        fetch('https://ccm-amateurhour.herokuapp.com/gig/new', {
-            method: 'POST',
+        this.props.editModal()
+        fetch(`https://ccm-amateurhour.herokuapp.com/gig/edit/${this.props.gigToEdit.id}`,{
+            method: 'PUT',
             body: JSON.stringify({
                 title: this.state.title,
                 location: this.state.location,
                 size: this.state.size,
-                instrument: this.state.instruments,
+                instruments: this.state.instruments,
                 genre: this.state.genre,
                 content: this.state.content
             }),
@@ -50,25 +62,37 @@ export default class PostGig extends React.Component<AcceptedProps, PostState>{
             })
         })
         .then(res => console.log(res))
+        .then(()=>{this.props.gigFetch()})
         .catch(err => console.log(err))
-        .then(this.props.gigFetch)
+    }
+
+    onChangeMulti = (e: any) => {
+        let opts = [], opt;
+        for (let i = 0, len = e.target.options.length; i < len; i++) {
+            opt = e.target.options[i];
+            if (opt.selected) {
+                opts.push(opt.value);
+            }
+        }
+        this.setState({ genre: opts });
     }
 
     render(){
         return(
-                <Modal isOpen={true}
+            <div>
+            <Modal isOpen={true}
             {...this.props}
             size="lg"
             aria-labelledby="contained-modal-title-vcenter"
             centered
             >
                 <ModalHeader>
-                <button onClick={this.props.modalPopup}><FontAwesomeIcon icon={faArrowAltCircleLeft} size="3x"/></button>
-                <h3>Details</h3>
+                <button onClick={this.props.editModal}><FontAwesomeIcon icon={faArrowAltCircleLeft} size="3x"/></button>
+                <h3>Edit Gig</h3>
                 </ModalHeader>
             <ModalBody>
-            <Form onSubmit={this.postGig}>
-                <FormGroup>
+            <Form onSubmit={this.gigUpdate}>
+            <FormGroup>
                     <Label>Title</Label>
                     <Input type='text' value={this.state.title} placeholder="let's make a ska band" onChange={(e) => this.setState({title: e.target.value})}/>
                 </FormGroup>
@@ -86,17 +110,20 @@ export default class PostGig extends React.Component<AcceptedProps, PostState>{
                 </FormGroup>               
                 <FormGroup>
                     <Label>Genre</Label>
-                    <Input type='text' value={this.state.genre} placeholder='Classical, Jazz, Rock' onChange={(e) => this.setState({genre: Array(e.target.value)})} />
+                    <select multiple value={this.state.genre} onChange={(e) =>{this.onChangeMulti(e)}}>
+                        <option value="Jazz">Jazz</option>
+                        <option value="Classical">Classical</option>
+                    </select>
                 </FormGroup>               
                 <FormGroup>
                     <Label>Details</Label>
-                    <textarea name="details" id="details" onChange={(e) =>this.setState({content: e.target.value})}/>
+                    <textarea name="details" id="details" onChange={(e) =>this.setState({content: e.target.value})}>{this.props.gigToEdit.content}</textarea>
                 </FormGroup>
                 <Button type='submit'>Post gig!</Button>
             </Form>
             </ModalBody>
             </Modal>
+        </div>
         )
     }
-
 }

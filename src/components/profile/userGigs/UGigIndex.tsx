@@ -1,31 +1,15 @@
 import React from 'react';
-import GigTable from './GigTable';
-import PostGig from './PostGig';
+import UGigTable from './UGigTable';
 import 'react-loader-spinner/dist/loader/css/react-spinner-loader.css'
 import Loader from 'react-loader-spinner';
 import styled from 'styled-components';
-import background from '../../assets/gigs.jpg';
-import GigEdit from './GigEdit';
+import UGigEdit from './UGigEdit';
 
 const GigsView = styled.div`
     height: 75vh;
     overflow: auto;
-    width: 40vw;
+    width: 100%;
     margin: auto;
-`
-const ButtonDiv = styled.div`
-    width: 70vw;
-    margin: auto;
-    margin-bottom: 20px;
-    display: flex;
-    justify-content: flex-end
-`
-const FullPage = styled.div`
-    height: calc(100vh - 60px);
-    width: 100vw;
-    background-image: url(${background});
-    background-position: center;
-    background-size: cover;
 `
 const H = styled.h1`
     color: #FF9F1C;
@@ -37,7 +21,7 @@ type AcceptedProps={
 }
 
 type GigState ={
-    allGigs:[
+    userGigs:[
         {
             id: number,
             location: string,
@@ -80,11 +64,11 @@ type GigState ={
     editModalActive: boolean
 }
 
-export default class GigIndex extends React.Component<AcceptedProps, GigState>{
+export default class UGigIndex extends React.Component<AcceptedProps, GigState>{
     constructor(props: AcceptedProps){
         super(props)
         this.state={
-            allGigs:[
+            userGigs:[
                 {
                     id: 0,
                     location: '',
@@ -136,7 +120,7 @@ export default class GigIndex extends React.Component<AcceptedProps, GigState>{
     }
     gigFetch(){
         this.setState({loading: true})
-        fetch('https://ccm-amateurhour.herokuapp.com/gig/view', {
+        fetch(`https://ccm-amateurhour.herokuapp.com/gig/view/user/${localStorage.userId}`, {
             method: 'GET',
             headers: new Headers({
                 'Content-Type': 'application/json',
@@ -145,9 +129,9 @@ export default class GigIndex extends React.Component<AcceptedProps, GigState>{
     })
     .then(res => res.json())
     .then((gigData) =>{
-        this.setState({allGigs: gigData.allGigs}); console.log(gigData)
+        this.setState({userGigs: gigData.userGigs}); console.log(gigData)
     })
-    .then(()=>{console.log('logging state:', this.state.allGigs)})
+    .then(()=>{console.log('logging state:', this.state.userGigs)})
     .then(()=>{this.setState({loading: false})})
 }
     
@@ -182,13 +166,8 @@ export default class GigIndex extends React.Component<AcceptedProps, GigState>{
 
     render(){
         return(
-            <FullPage>
-                {/* <Filter /> */}
+            <div>
                 <H>Gigs</H>
-                <ButtonDiv>
-                <button onClick={this.modalPopup}>+</button>
-                </ButtonDiv>
-                {this.state.createModalActive ? <PostGig gigFetch={this.gigFetch} modalPopup={this.modalPopup}/> : null}
                 {this.state.loading ? 
                 <div>
                     <Loader type='Audio' color='#FF9F1C'/>
@@ -196,11 +175,11 @@ export default class GigIndex extends React.Component<AcceptedProps, GigState>{
                 </div>
                 :
                 <GigsView>
-                    <GigTable allGigs={this.state.allGigs} gigFetch={this.gigFetch} gigToEdit={this.gigToEdit} editModal={this.editModal}/>
+                    <UGigTable userGigs={this.state.userGigs} gigFetch={this.gigFetch} gigToEdit={this.gigToEdit} editModal={this.editModal}/>
                 </GigsView> }
-                {this.state.editModalActive ? <GigEdit editModal={this.editModal} gigToEdit={this.state.gigToEdit} gigFetch={this.gigFetch}/> : null}
+                {this.state.editModalActive ? <UGigEdit editModal={this.editModal} gigToEdit={this.state.gigToEdit} gigFetch={this.gigFetch}/> : null}
 
-            </FullPage>
+            </div>
         )
     }
 

@@ -1,10 +1,10 @@
 import React from "react";
 
-import Gig from "./Gig";
+import UGig from "./UGig";
 
 
 type AcceptedProps = {
-    allGigs: [
+    userGigs: [
         {
             id: number,
             location: string,
@@ -45,12 +45,17 @@ type AcceptedProps = {
     editModal: () => void
 }
 
-const GigTable =(props: AcceptedProps)=>{
+const UGigTable =(props: AcceptedProps)=>{
 
     const gigMapper = () => {
-        return props.allGigs.map((gig, index) => {
-            return <Gig gig={gig} index={index} gigToEdit={props.gigToEdit} gigFetch={props.gigFetch} editModal={props.editModal}/>
-        })
+        if(props.userGigs.length > 0){
+            return props.userGigs.map((gig, index) => {
+                return <UGig gig={gig} index={index} gigToEdit={props.gigToEdit} gigFetch={props.gigFetch} editModal={props.editModal}/>
+            }) 
+        } else {
+            return 'No Gigs Posted Yet'
+        }
+    
     }
         return (
             <div>
@@ -61,4 +66,4 @@ const GigTable =(props: AcceptedProps)=>{
 }
 
 
-export default GigTable;
+export default UGigTable;
