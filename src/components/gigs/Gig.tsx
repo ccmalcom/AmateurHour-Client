@@ -90,6 +90,17 @@ export default class Gig extends React.Component<AcceptedProps, GigState>{
             .then(res => console.log(res))
             .then(() => this.props.gigFetch())
     }
+    adminDeleteGig = (gig: number) => {
+        fetch(`https://ccm-amateurhour.herokuapp.com/gig/delete/${gig}/admin`, {
+            method: 'DELETE',
+            headers: new Headers({
+                'Content-Type': 'application/json',
+                'Authorization': localStorage.token
+            })
+        })
+            .then(res => console.log(res))
+            .then(() => this.props.gigFetch())
+    }
 
     viewCommentToggle(){
         this.setState((state)=>{return{viewComment: !state.viewComment}})
@@ -105,7 +116,9 @@ export default class Gig extends React.Component<AcceptedProps, GigState>{
                         <DropdownMenu>
                             <DropdownItem header>Options</DropdownItem>
                             {localStorage.userId == this.props.gig.userId ? <DropdownItem onClick={() => { this.props.gigToEdit(this.props.gig); this.props.editModal() }}>Edit Gig</DropdownItem> : null}
+                            {localStorage.role === 'Admin' ? <DropdownItem onClick={() => { this.props.gigToEdit(this.props.gig); this.props.editModal() }}>Edit Gig</DropdownItem> : null}
                             {localStorage.userId == this.props.gig.userId ? <DropdownItem onClick={() => { this.deleteGig(this.props.gig.id) }}>Delete Gig</DropdownItem> : null}
+                            {localStorage.role === 'Admin' ? <DropdownItem onClick={() => { this.adminDeleteGig(this.props.gig.id) }}>Delete Gig</DropdownItem> : null}
                         </DropdownMenu>
                     </UncontrolledDropdown>
                 </DropdownDiv>

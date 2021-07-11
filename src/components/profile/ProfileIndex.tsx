@@ -3,6 +3,7 @@ import UserProfile from "./UserProfile";
 import styled from "styled-components";
 import UGigIndex from "./userGigs/UGigIndex";
 import ProfileEdit from "./ProfileEdit";
+import DeleteUser from "./DeleteUser";
 
 const FullPage = styled.div`
     height: calc(100vh - 60px);
@@ -19,6 +20,7 @@ const PostsBox = styled.div`
     background-color: #FDFFFC
 `
 type AcceptedProps = {
+    clearSession: ()=> void
 
 }
 
@@ -48,7 +50,8 @@ type IndexState = {
             }
         ]
     },
-    editModalActive: boolean
+    editModalActive: boolean,
+    deleteModalActive: boolean,
 }
 
 export default class ProfileIndex extends React.Component<AcceptedProps, IndexState>{
@@ -81,9 +84,11 @@ export default class ProfileIndex extends React.Component<AcceptedProps, IndexSt
                 ]
             },
             editModalActive: false,
+            deleteModalActive: false,
         }
         this.editModal = this.editModal.bind(this)
         this.getUserInfo = this.getUserInfo.bind(this)
+        this.deleteModal = this.deleteModal.bind(this)
     }
     componentDidMount() {
         this.getUserInfo()
@@ -107,16 +112,23 @@ export default class ProfileIndex extends React.Component<AcceptedProps, IndexSt
     editModal(){
         this.setState((state)=>{return{editModalActive: !state.editModalActive}})
     }
+
+    deleteModal(){
+        this.setState((state) =>{return{deleteModalActive: !state.deleteModalActive}})
+    }
     render() {
         return (
             <FullPage>
-                <UserProfile userData={this.state.userData} editModal={this.editModal}/>
+                <UserProfile userData={this.state.userData} editModal={this.editModal} deleteModal={this.deleteModal}/>
                 <PostsBox>
                     <UGigIndex />
                 </PostsBox>
                 {this.state.editModalActive ? 
                 <ProfileEdit userData={this.state.userData} editModal={this.editModal} userFetch={this.getUserInfo}/>
                 : null }
+                {this.state.deleteModalActive ? 
+                <DeleteUser  deleteModal={this.deleteModal} clearSession={this.props.clearSession} />
+                : null}
             </FullPage>
         )
     }

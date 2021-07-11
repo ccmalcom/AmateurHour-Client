@@ -43,7 +43,8 @@ type AcceptedProps={
             }
         ]
     },
-    editModal: ()=>void
+    editModal: ()=>void,
+    deleteModal: ()=>void
 }
 
 type ProfileState={
@@ -79,7 +80,7 @@ export default class UserProfile extends React.Component<AcceptedProps, ProfileS
     }
     zipToLocation(){
         this.setState({dataFetched: true})
-        fetch(`http://api.zippopotam.us/us/${this.props.userData.zipCode}`)
+        fetch(`https://api.zippopotam.us/us/${this.props.userData.zipCode}`)
         .then(res=> res.json())
         .then( data => this.setState({locData: data}))
         .then(()=>{console.log(this.state.locData)})
@@ -115,7 +116,12 @@ export default class UserProfile extends React.Component<AcceptedProps, ProfileS
                 {this.props.userData.socialLinks !== null?
                 <div>{this.linkMapper()}</div>    
                 : null}
+                {localStorage.role !== 'Test' ?  
                 <button onClick={this.props.editModal}>Edit Profile</button>
+                : null}
+                {localStorage.role !== 'Test' ?  
+                <button onClick={this.props.deleteModal}>Delete Profile</button>
+                : null}
             </ProfileBox>
 
         )

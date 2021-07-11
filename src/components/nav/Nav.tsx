@@ -1,12 +1,18 @@
-import { Route, Link, Switch } from 'react-router-dom';
+import { Route, Link, Switch, Redirect } from 'react-router-dom';
 import PeopleIndex from '../people/PeopleIndex';
 import ProfileIndex from '../profile/ProfileIndex'
 import GigIndex from '../gigs/GigIndex';
 import styled from 'styled-components';
 import logo from '../../assets/logo.png';
+import Landing from '../landing/LandingDisplay';
+
+type AcceptedProps = {
+    clickLogout: () => void,
+    isUserAuthenticated: boolean
+}
 
 
-const NavBar = (props: any) =>{
+const NavBar = (props: AcceptedProps) => {
     const Nav = styled.nav`
     list-style: none;
     display: flex;
@@ -28,25 +34,36 @@ const NavBar = (props: any) =>{
         text-decoration: none !important
     `
 
-    return(
+    return (
         <div>
             <Nav>
                 <Logo src={logo} alt="" />
                 <NavLinks>
-                <li><Link to='/'>Home</Link></li>
-                <li><Link to='/people'>People</Link></li>
-                <li><Link to='/profile'>Profile</Link></li>
-                <button onClick={props.clickLogout}>Logout</button>
+                    <li><Link to='/home'>Home</Link></li>
+                    <li><Link to='/people'>People</Link></li>
+                    <li><Link to='/profile'>Profile</Link></li>
+                    <button onClick={props.clickLogout}>Logout</button>
                 </NavLinks>
             </Nav>
             <div>
                 <Switch>
-                    <Route exact path='/'><GigIndex /></Route>
+                    <Route exact path='/home'><GigIndex /></Route>
+                    {/* <Route exact path='/landing'><Landing /></Route> */}
+                    <Route
+                        exact
+                        path="/"
+                        render={() => {
+                            return (
+                                props.isUserAuthenticated ?
+                                    <Redirect to="/home" /> :
+                                    <Redirect to="/" />
+                            )
+                        }} />
                     <Route exact path='/people'><PeopleIndex /></Route>
-                    <Route exact path='/profile'>< ProfileIndex/></Route>
+                <Route exact path='/profile'>< ProfileIndex clearSession={props.clickLogout}/></Route>
                 </Switch>
-            </div>
         </div>
+        </div >
     )
 }
 

@@ -2,7 +2,7 @@ import React from "react";
 import { Tooltip } from 'reactstrap';
 
 type AcceptedProps={
-    updateToken: (newToken: string, newUserId: number) => void,
+    updateToken: (newToken: string, newUserId: number, newRole: string) => void,
     changeView: () => void,
     isLoading: () => void
 }
@@ -66,7 +66,7 @@ export default class Register extends React.Component<AcceptedProps, RegisterSta
         })
         .then(res => res.json())
         // .then(console.log)
-        .then(data => this.props.updateToken(data.sessionToken, data.user.id))
+        .then(data => this.props.updateToken(data.sessionToken, data.user.id, data.user.admin))
         .then(this.props.isLoading)
         .catch(err => console.log(err))
     }

@@ -29,7 +29,7 @@ type AcceptedProps={
     gigFetch: () => void
 }
 
-export default class GigEdit extends React.Component<AcceptedProps, EditState>{
+export default class AdminGigEdit extends React.Component<AcceptedProps, EditState>{
     constructor(props: AcceptedProps){
         super(props)
         this.state={
@@ -46,7 +46,7 @@ export default class GigEdit extends React.Component<AcceptedProps, EditState>{
     gigUpdate(e: any){
         e.preventDefault()
         this.props.editModal()
-        fetch(`https://ccm-amateurhour.herokuapp.com/gig/edit/${this.props.gigToEdit.id}`,{
+        fetch(`https://ccm-amateurhour.herokuapp.com/gig/edit/${this.props.gigToEdit.id}/admin`,{
             method: 'PUT',
             body: JSON.stringify({
                 title: this.state.title,

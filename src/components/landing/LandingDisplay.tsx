@@ -47,6 +47,12 @@ const Text = styled.p`
     margin: 10% auto;
     font-size: calc(12px + 0.5vw)
 `
+const Text2 = styled.p`
+    color: #E2DBCA;
+    width: 50%;
+    margin: auto;
+    font-size: calc(12px + 0.5vw)
+`
 
 const Heading = styled.h1`
     color: #E2DBCA;
@@ -61,7 +67,7 @@ const LoaderDiv = styled.div`
 `
 
 type AcceptedProps = {
-    updateToken: (newToken: string, newUserId: number) => void
+    updateToken: (newToken: string, newUserId: number, newRole: string) => void
 }
 
 type LandingState = {
@@ -77,7 +83,8 @@ class Landing extends React.Component<AcceptedProps, LandingState>{
             loading: false
         }
         this.changeView = this.changeView.bind(this);
-        this.isLoading = this.isLoading.bind(this)
+        this.isLoading = this.isLoading.bind(this);
+        this.handleSubmit = this.handleSubmit.bind(this)
     }
 
     changeView() {
@@ -90,8 +97,26 @@ class Landing extends React.Component<AcceptedProps, LandingState>{
     isLoading() {
         this.setState((state) => { return { loading: !state.loading } })
     }
-    render() {
 
+    handleSubmit(){
+        this.isLoading()
+        fetch('https://ccm-amateurhour.herokuapp.com/user/login', {
+            method: 'POST',
+            body: JSON.stringify({
+                user:{
+                    emailAddress: 'jdoe@gmail.com',
+                    password: 'password',
+                }}),
+                headers: new Headers({'Content-Type': 'application/json'})
+        })
+        .then(res => res.json())
+        // .then(console.log)
+        .then(data => this.props.updateToken(data.sessionToken, data.user.id, data.user.admin))
+        .then(this.isLoading)
+        .catch(err => console.log(err))
+    }
+    
+    render() {
         return (
             <div>
                 {this.state.registerView ?
@@ -115,6 +140,8 @@ class Landing extends React.Component<AcceptedProps, LandingState>{
                                     <br /> <br /> <br />
                                     Sign up today, and keep playing.
                                 </Text>
+                                <Text2>Not ready to sign up? Click below for a sample view</Text2>
+                                <button onClick={this.handleSubmit}>Try it</button>
 
                             </RegLeft>
                             <Form>

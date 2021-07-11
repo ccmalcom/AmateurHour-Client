@@ -44,7 +44,9 @@ const CommentTable=(props: AcceptedProps)=>{
                 {props.comments.length > 0 ?
                 <div>{commentMapper()}</div> : 'No Comments'
                 }
+                {localStorage.role !== 'Test' ?  
                 <UPostComment gigId={props.gigId} gigFetch={props.gigFetch} />
+                : null}
             </div>
         )
     }

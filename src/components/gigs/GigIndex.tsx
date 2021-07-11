@@ -6,6 +6,7 @@ import Loader from 'react-loader-spinner';
 import styled from 'styled-components';
 import background from '../../assets/gigs.jpg';
 import GigEdit from './GigEdit';
+import AdminGigEdit from './AdminGigEdit';
 
 const GigsView = styled.div`
     height: 75vh;
@@ -185,9 +186,11 @@ export default class GigIndex extends React.Component<AcceptedProps, GigState>{
             <FullPage>
                 {/* <Filter /> */}
                 <H>Gigs</H>
+                {localStorage.role !== 'Test' ?  
                 <ButtonDiv>
                 <button onClick={this.modalPopup}>+</button>
                 </ButtonDiv>
+                : null}
                 {this.state.createModalActive ? <PostGig gigFetch={this.gigFetch} modalPopup={this.modalPopup}/> : null}
                 {this.state.loading ? 
                 <div>
@@ -199,6 +202,7 @@ export default class GigIndex extends React.Component<AcceptedProps, GigState>{
                     <GigTable allGigs={this.state.allGigs} gigFetch={this.gigFetch} gigToEdit={this.gigToEdit} editModal={this.editModal}/>
                 </GigsView> }
                 {this.state.editModalActive ? <GigEdit editModal={this.editModal} gigToEdit={this.state.gigToEdit} gigFetch={this.gigFetch}/> : null}
+                {this.state.editModalActive && localStorage.role === 'Admin' ? <AdminGigEdit editModal={this.editModal} gigToEdit={this.state.gigToEdit} gigFetch={this.gigFetch}/> : null}
 
             </FullPage>
         )
