@@ -59,8 +59,8 @@ export default class Register extends React.Component<AcceptedProps, RegisterSta
                     zipCode: this.state.zipcode,
                     emailAddress: this.state.email,
                     password: this.state.password,
-                    instrument:null,
-                    genre: null,
+                    instrument: this.state.instrument,
+                    genre: this.state.genre,
                     admin: this.state.admin
                 }})
         })
@@ -109,13 +109,7 @@ export default class Register extends React.Component<AcceptedProps, RegisterSta
                 </div>
                 <div>
                     <label htmlFor="instrument">Instrument(s)</label>
-                    {/* <input name='instrument' value={this.state.instrument} required onChange={(e) => this.setState({instrument: e.target.value})} /> */}
-                    {/* <select name="instrument" id="instrument" multiple onChange={(e) => {this.setState({instrumentString: e.target.value})
-                console.log(e.target.options)}}>
-                        <option value="trumpet,">Trumpet</option>
-                        <option value="guitar,">Guitar</option>
-                        <option value="bass,">Bass</option>
-                    </select> */}
+                    <input name='instrument' value={this.state.instrument} required onChange={(e) => this.setState({instrument: Array(e.target.value)})} />
                 </div>
                 <div>
                     <label htmlFor="genre">Genre(s)</label>
