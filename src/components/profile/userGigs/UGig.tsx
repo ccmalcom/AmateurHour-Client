@@ -24,7 +24,7 @@ const DropdownDiv = styled.div`
     justify-content: flex-end
 `
 
-type AcceptedProps={
+type AcceptedProps = {
     gig: {
         id: number;
         location: string;
@@ -37,7 +37,7 @@ type AcceptedProps={
         updatedAt: string;
         userId: number;
         posterName: string;
-        comments: [  {
+        comments: [{
             id: number,
             content: string,
             userId: number,
@@ -64,7 +64,7 @@ type AcceptedProps={
     editModal: () => void
 }
 
-type GigState={
+type GigState = {
     viewComment: boolean
 
 }
@@ -90,13 +90,25 @@ export default class Gig extends React.Component<AcceptedProps, GigState>{
             .then(res => console.log(res))
             .then(() => this.props.gigFetch())
     }
-
-    viewCommentToggle(){
-        this.setState((state)=>{return{viewComment: !state.viewComment}})
+    adminDeleteGig = (gig: number) => {
+        fetch(`https://ccm-amateurhour.herokuapp.com/gig/delete/${gig}/admin`, {
+            method: 'DELETE',
+            headers: new Headers({
+                'Content-Type': 'application/json',
+                'Authorization': localStorage.token
+            })
+        })
+            .then(res => console.log(res))
+            .then(() => this.props.gigFetch())
     }
-    render(){
+
+    viewCommentToggle() {
+        this.setState((state) => { return { viewComment: !state.viewComment } })
+    }
+    render() {
         return (
             <ThisGig key={this.props.index}>
+                {localStorage.role !== 'Test' ?
                 <DropdownDiv>
                     <UncontrolledDropdown>
                         <DropdownToggle caret>
@@ -106,9 +118,12 @@ export default class Gig extends React.Component<AcceptedProps, GigState>{
                             <DropdownItem header>Options</DropdownItem>
                             {localStorage.userId == this.props.gig.userId ? <DropdownItem onClick={() => { this.props.gigToEdit(this.props.gig); this.props.editModal() }}>Edit Gig</DropdownItem> : null}
                             {localStorage.userId == this.props.gig.userId ? <DropdownItem onClick={() => { this.deleteGig(this.props.gig.id) }}>Delete Gig</DropdownItem> : null}
+                            {/* ADMIN */}
+                            {localStorage.role === 'Admin' ? <DropdownItem onClick={() => { this.adminDeleteGig(this.props.gig.id) }}>Delete Gig</DropdownItem> : null}
                         </DropdownMenu>
                     </UncontrolledDropdown>
                 </DropdownDiv>
+                : null }
                 <PostData>
                     <div>
                         <h3>{this.props.gig.posterName}</h3>
@@ -134,10 +149,10 @@ export default class Gig extends React.Component<AcceptedProps, GigState>{
                     </div>
                 </footer>
                 <div>
-                    {this.state.viewComment ? 
-                    <div>
-                        <UCommentTable gigFetch={this.props.gigFetch} comments={this.props.gig.comments} gigId={this.props.gig.id}/> 
-                    </div> : null }
+                    {this.state.viewComment ?
+                        <div>
+                            <UCommentTable gigFetch={this.props.gigFetch} comments={this.props.gig.comments} gigId={this.props.gig.id} />
+                        </div> : null}
 
                 </div>
             </ThisGig>

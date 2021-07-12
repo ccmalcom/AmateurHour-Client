@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { FormEvent } from 'react';
 import { Button, Form, FormGroup, Label, Input, Modal, ModalHeader, ModalBody, } from "reactstrap";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowAltCircleLeft } from '@fortawesome/free-solid-svg-icons';
@@ -46,7 +46,7 @@ export default class ProfileEdit extends React.Component<AcceptedProps, EditStat
         this.profileUpdate = this.profileUpdate.bind(this)
     }
 
-    profileUpdate(e: any) {
+    profileUpdate(e: FormEvent) {
         e.preventDefault()
         this.props.editModal()
         fetch(`https://ccm-amateurhour.herokuapp.com/user/edit`, {

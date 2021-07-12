@@ -69,7 +69,7 @@ const NavBar = (props: AcceptedProps) => {
                             return (
                                 props.isUserAuthenticated ?
                                     <Redirect to="/home" /> :
-                                    <Redirect to="/" />
+                                    null
                             )
                         }} />
                     <Route exact path='/people'><PeopleIndex /></Route>

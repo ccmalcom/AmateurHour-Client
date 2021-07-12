@@ -1,4 +1,4 @@
-import React from "react";
+import React, { FormEvent } from "react";
 import { Button, Form, FormGroup, Label, Input, Modal, ModalHeader, ModalBody, ModalFooter, } from "reactstrap";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowAltCircleLeft } from '@fortawesome/free-solid-svg-icons';
@@ -31,7 +31,7 @@ export default class PostGig extends React.Component<AcceptedProps, PostState>{
         this.postGig = this.postGig.bind(this)
     }
 
-    postGig(e: any){
+    postGig(e: FormEvent){
         e.preventDefault()
         this.props.modalPopup()
         fetch('https://ccm-amateurhour.herokuapp.com/gig/new', {

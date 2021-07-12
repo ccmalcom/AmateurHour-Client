@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { MouseEvent } from 'react';
 
 
 type AcceptedProps ={
@@ -23,7 +23,7 @@ export default class UCommentEdit extends React.Component<AcceptedProps, EditSta
     }
 
 
-    commentUpdate(e: any){
+    commentUpdate(e: MouseEvent){
         e.preventDefault()
         fetch(`https://ccm-amateurhour.herokuapp.com/comment/edit/${this.props.comment.id}`,{
             method: 'PUT',

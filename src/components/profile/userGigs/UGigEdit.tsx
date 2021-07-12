@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { FormEvent } from 'react';
 import { Button, Form, FormGroup, Label, Input, Modal, ModalHeader, ModalBody, } from "reactstrap";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowAltCircleLeft } from '@fortawesome/free-solid-svg-icons';
@@ -43,7 +43,7 @@ export default class GigEdit extends React.Component<AcceptedProps, EditState>{
         this.gigUpdate = this.gigUpdate.bind(this)
     }
 
-    gigUpdate(e: any){
+    gigUpdate(e: FormEvent){
         e.preventDefault()
         this.props.editModal()
         fetch(`https://ccm-amateurhour.herokuapp.com/gig/edit/${this.props.gigToEdit.id}`,{
@@ -64,17 +64,6 @@ export default class GigEdit extends React.Component<AcceptedProps, EditState>{
         .then(res => console.log(res))
         .then(()=>{this.props.gigFetch()})
         .catch(err => console.log(err))
-    }
-
-    onChangeMulti = (e: any) => {
-        let opts = [], opt;
-        for (let i = 0, len = e.target.options.length; i < len; i++) {
-            opt = e.target.options[i];
-            if (opt.selected) {
-                opts.push(opt.value);
-            }
-        }
-        this.setState({ genre: opts });
     }
 
     render(){
@@ -110,10 +99,7 @@ export default class GigEdit extends React.Component<AcceptedProps, EditState>{
                 </FormGroup>               
                 <FormGroup>
                     <Label>Genre</Label>
-                    <select multiple value={this.state.genre} onChange={(e) =>{this.onChangeMulti(e)}}>
-                        <option value="Jazz">Jazz</option>
-                        <option value="Classical">Classical</option>
-                    </select>
+                    <Input type='text' value={this.state.genre} placeholder='Rock, Jazz' onChange={(e) => this.setState({genre: Array(e.target.value)})} />
                 </FormGroup>               
                 <FormGroup>
                     <Label>Details</Label>

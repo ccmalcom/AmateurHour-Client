@@ -81,8 +81,7 @@ class Landing extends React.Component<AcceptedProps, LandingState>{
             loading: false
         }
         this.changeView = this.changeView.bind(this);
-        this.isLoading = this.isLoading.bind(this);
-        this.handleSubmit = this.handleSubmit.bind(this)
+        this.handleTryIt = this.handleTryIt.bind(this)
     }
 
     changeView() {
@@ -92,12 +91,8 @@ class Landing extends React.Component<AcceptedProps, LandingState>{
         console.log(this.state.registerView);
     }
 
-    isLoading() {
-        this.setState((state) => { return { loading: !state.loading } })
-    }
 
-    handleSubmit(){
-        this.isLoading()
+    handleTryIt(){
         fetch('https://ccm-amateurhour.herokuapp.com/user/login', {
             method: 'POST',
             body: JSON.stringify({
@@ -110,7 +105,6 @@ class Landing extends React.Component<AcceptedProps, LandingState>{
         .then(res => res.json())
         // .then(console.log)
         .then(data => this.props.updateToken(data.sessionToken, data.user.id, data.user.admin))
-        .then(this.isLoading)
         .catch(err => console.log(err))
     }
     
@@ -119,11 +113,6 @@ class Landing extends React.Component<AcceptedProps, LandingState>{
             <div>
                 {this.state.registerView ?
                     <div>
-                        {this.state.loading ? 
-                        <LoaderDiv>
-                            <Loader type='Audio' color='#FF9F1C' />
-                        </LoaderDiv> 
-                        : 
                         <LandingDiv>
                             <RegLeft>
                                 <Logo src={logo} alt="" />
@@ -140,25 +129,20 @@ class Landing extends React.Component<AcceptedProps, LandingState>{
                                 </Text>
                             </RegLeft>
                             <Form>
-                                <Register updateToken={this.props.updateToken} changeView={this.changeView} isLoading={this.isLoading} handleSubmit={this.handleSubmit}/>
+                                <Register updateToken={this.props.updateToken} changeView={this.changeView}  handleTryIt={this.handleTryIt}/>
                             </Form>
-                        </LandingDiv>}
+                        </LandingDiv>
                     </div>
                     :
                     <div>
-                        {this.state.loading ? 
-                        <LoaderDiv>
-                            <Loader type='Audio' color='#FF9F1C' />
-                        </LoaderDiv>                         
-                        :
                             <LandingDiv>
                                 <LoginLeft>
                                     <Heading>Good to see you again.</Heading>
                                 </LoginLeft>
                                 <Form>
-                                    <Login updateToken={this.props.updateToken} changeView={this.changeView} isLoading={this.isLoading} />
+                                    <Login updateToken={this.props.updateToken} changeView={this.changeView} />
                                 </Form>
-                            </LandingDiv>}
+                            </LandingDiv>
                     </div>
                 }
             </div>

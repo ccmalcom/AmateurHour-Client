@@ -138,6 +138,7 @@ export default class Gig extends React.Component<AcceptedProps, GigState>{
     render(){
         return (
             <ThisGig key={this.props.index}>
+                {localStorage.role !== 'Test' ?
                 <DropdownDiv>
                     <UncontrolledDropdown>
                         <DropdownToggle caret>
@@ -154,6 +155,7 @@ export default class Gig extends React.Component<AcceptedProps, GigState>{
                         </DropdownMenu>
                     </UncontrolledDropdown>
                 </DropdownDiv>
+                : null}
                 <PostData>
                     <div>
                         <h2>{this.props.gig.title}</h2>

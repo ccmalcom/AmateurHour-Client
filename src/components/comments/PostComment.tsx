@@ -1,4 +1,4 @@
-import React from "react";
+import React, { MouseEvent } from "react";
 
 type AcceptedProps ={
     gigId: number,
@@ -17,7 +17,7 @@ export default class PostComment extends React.Component<AcceptedProps, IndexSta
         }
     }
 
-    CommentPost(e: any){
+    CommentPost(e: MouseEvent){
         e.preventDefault()
         fetch(`https://ccm-amateurhour.herokuapp.com/comment/new`, {
             method: 'POST',

@@ -1,7 +1,4 @@
-import React from 'react';
-import { Button, Form, FormGroup, Label, Input, Modal, ModalHeader, ModalBody, ModalFooter, } from "reactstrap";
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faArrowAltCircleLeft } from '@fortawesome/free-solid-svg-icons';
+import React, { UIEvent } from 'react';
 
 type AcceptedProps ={
     comment: {
@@ -25,7 +22,7 @@ export default class CommentEdit extends React.Component<AcceptedProps, EditStat
     }
 
 
-    commentUpdate(e: any){
+    commentUpdate(e: UIEvent){
         e.preventDefault()
         fetch(`https://ccm-amateurhour.herokuapp.com/comment/edit/${this.props.comment.id}`,{
             method: 'PUT',

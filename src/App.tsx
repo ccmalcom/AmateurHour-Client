@@ -43,7 +43,7 @@ class App extends React.Component<{}, AppState> {
   }
 
   protectedViews(){
-    return(localStorage.token ? <Router>
+    return(localStorage.token === this.state.sessionToken && this.state.sessionToken !== '' ? <Router>
       <NavBar clickLogout={this.clearSession} isUserAuthenticated={this.state.isUserAuthenticated}/>
       </ Router> 
       : <Landing updateToken={this.updateToken} /> )

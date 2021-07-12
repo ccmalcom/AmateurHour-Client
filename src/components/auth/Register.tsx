@@ -1,6 +1,8 @@
-import React from "react";
-import { Tooltip, Form, FormGroup, Input, Label } from 'reactstrap';
+import React, { FormEvent } from "react";
+import { Tooltip, FormGroup, Input, Label } from 'reactstrap';
 import styled from 'styled-components';
+import Loader from 'react-loader-spinner';
+
 
 const FlexDiv = styled.div`
     display: flex;
@@ -18,11 +20,16 @@ const FormContainer = styled.form`
 const RegisterDiv = styled.div`
     height: 100%
 `
+const LoaderDiv = styled.div`
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%
+`
 type AcceptedProps={
     updateToken: (newToken: string, newUserId: number, newRole: string) => void,
     changeView: () => void,
-    isLoading: () => void,
-    handleSubmit: ()=>void
+    handleTryIt: ()=>void
 }
 
 type RegisterState={
@@ -35,7 +42,8 @@ type RegisterState={
     instrument: Array<string>, //!should be array of strings
     genre: Array<string>, //! should be array of strings
     admin: string,
-    tooltipOpen: boolean
+    tooltipOpen: boolean,
+    loading: boolean
 }
 
 export default class Register extends React.Component<AcceptedProps, RegisterState>{
@@ -51,7 +59,8 @@ export default class Register extends React.Component<AcceptedProps, RegisterSta
             instrument: [], //! should be array of strings
             genre: [], //! should be array of strings
             admin: 'User',
-            tooltipOpen: false
+            tooltipOpen: false,
+            loading: false
         }
         this.handleSubmit = this.handleSubmit.bind(this)
         this.toggle = this.toggle.bind(this)
@@ -62,9 +71,9 @@ export default class Register extends React.Component<AcceptedProps, RegisterSta
             return {tooltipOpen: !state.tooltipOpen}
         })
     }
-    handleSubmit(e: any){
+    handleSubmit(e: FormEvent){
         e.preventDefault()
-        this.props.isLoading()
+        this.isLoading()
         console.log('handling submit');
         // this.toArray()
         fetch('https://ccm-amateurhour.herokuapp.com/user/register', {
@@ -85,22 +94,19 @@ export default class Register extends React.Component<AcceptedProps, RegisterSta
         .then(res => res.json())
         // .then(console.log)
         .then(data => this.props.updateToken(data.sessionToken, data.user.id, data.user.admin))
-        .then(this.props.isLoading)
+        .then(this.isLoading)
         .catch(err => console.log(err))
     }
-
-    toArray(){
-        this.setState({instrument: this.state.instrumentString.split(',')})
-        console.log(this.state.instrument);
+    isLoading() {
+        this.setState((state) => { return { loading: !state.loading } })
     }
-
-    // handleChange = (e) => {
-    //     let value = Array.from(e.target.selectedOptions, option => option.value);
-    //     this.setState({instrument: value});
-    // }
 
     render(){
         return(
+            <>
+                {this.state.loading ?  <LoaderDiv>
+                            <Loader type='Audio' color='#FF9F1C' />
+                        </LoaderDiv> :
             <RegisterDiv className='register'>
             <FormContainer onSubmit={this.handleSubmit}>
                 <FlexDiv>
@@ -139,8 +145,10 @@ export default class Register extends React.Component<AcceptedProps, RegisterSta
                 <p>Already have an account?</p>
                 <button onClick={this.props.changeView}>Login</button>
                 <p>Not ready to sign up? Click below for a sample view</p>
-                                <button onClick={this.props.handleSubmit}>Try it</button>
+                                <button onClick={()=>{this.props.handleTryIt(); this.isLoading()}}>Try it</button>
             </RegisterDiv>
+            }
+            </>
         )
     }
 
