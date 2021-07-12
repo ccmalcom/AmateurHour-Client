@@ -5,6 +5,9 @@ import GigIndex from '../gigs/GigIndex';
 import styled from 'styled-components';
 import logo from '../../assets/logo.png';
 import Landing from '../landing/LandingDisplay';
+import './Nav.css'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faSignOutAlt } from '@fortawesome/free-solid-svg-icons';
 
 type AcceptedProps = {
     clickLogout: () => void,
@@ -31,7 +34,17 @@ const NavBar = (props: AcceptedProps) => {
     const NavLinks = styled.div`
         display: flex;
         justify-content: space-between;
-        text-decoration: none !important
+        width: 30%;
+        align-items: center
+    `
+
+    const LOButton = styled.button`
+        color: #FF9F1C;
+        background-color: transparent;
+        border: none;
+        &:hover {
+            color: #891A1C
+        }
     `
 
     return (
@@ -39,10 +52,10 @@ const NavBar = (props: AcceptedProps) => {
             <Nav>
                 <Logo src={logo} alt="" />
                 <NavLinks>
-                    <li><Link to='/home'>Home</Link></li>
-                    <li><Link to='/people'>People</Link></li>
-                    <li><Link to='/profile'>Profile</Link></li>
-                    <button onClick={props.clickLogout}>Logout</button>
+                    <li><Link className='NavLinks' to='/home'>Home</Link></li>
+                    <li><Link className='NavLinks' to='/people'>People</Link></li>
+                    <li><Link className='NavLinks' to='/profile'>Profile</Link></li>
+                    <LOButton onClick={props.clickLogout}><FontAwesomeIcon icon={faSignOutAlt} size='2x' /></LOButton>
                 </NavLinks>
             </Nav>
             <div>

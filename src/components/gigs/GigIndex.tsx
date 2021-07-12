@@ -11,8 +11,7 @@ import AdminGigEdit from './AdminGigEdit';
 const GigsView = styled.div`
     height: 75vh;
     overflow: auto;
-    width: 40vw;
-    margin: auto;
+    width: 50vw;
 `
 const ButtonDiv = styled.div`
     width: 70vw;
@@ -32,13 +31,25 @@ const H = styled.h1`
     color: #FF9F1C;
     padding-top: 30px
 `
+const ContentDiv = styled.div`
+    display: flex;
+    justify-content: space-evenly;
+    width: 80vw;
+    margin: auto
+`
 
-type AcceptedProps={
+const FilterBox = styled.div`
+    background-color: white;
+    height: 75vh;
+    width: 30%
+`
+
+type AcceptedProps = {
 
 }
 
-type GigState ={
-    allGigs:[
+type GigState = {
+    allGigs: [
         {
             id: number,
             location: string,
@@ -82,10 +93,10 @@ type GigState ={
 }
 
 export default class GigIndex extends React.Component<AcceptedProps, GigState>{
-    constructor(props: AcceptedProps){
+    constructor(props: AcceptedProps) {
         super(props)
-        this.state={
-            allGigs:[
+        this.state = {
+            allGigs: [
                 {
                     id: 0,
                     location: '',
@@ -131,30 +142,31 @@ export default class GigIndex extends React.Component<AcceptedProps, GigState>{
         this.editModal = this.editModal.bind(this)
     }
 
-    componentDidMount(){
+    componentDidMount() {
         // console.log();
         this.gigFetch()
     }
-    gigFetch(){
-        this.setState({loading: true})
+
+    gigFetch() {
+        this.setState({ loading: true })
         fetch('https://ccm-amateurhour.herokuapp.com/gig/view', {
             method: 'GET',
             headers: new Headers({
                 'Content-Type': 'application/json',
                 'Authorization': localStorage.token
-        }),
-    })
-    .then(res => res.json())
-    .then((gigData) =>{
-        this.setState({allGigs: gigData.allGigs}); console.log(gigData)
-    })
-    .then(()=>{console.log('logging state:', this.state.allGigs)})
-    .then(()=>{this.setState({loading: false})})
-}
-    
-    modalPopup(){
-        this.setState((state)=>{
-            return {createModalActive: !state.createModalActive}
+            }),
+        })
+            .then(res => res.json())
+            .then((gigData) => {
+                this.setState({ allGigs: gigData.allGigs }); console.log(gigData)
+            })
+            .then(() => { console.log('logging state:', this.state.allGigs) })
+            .then(() => { this.setState({ loading: false }) })
+    }
+
+    modalPopup() {
+        this.setState((state) => {
+            return { createModalActive: !state.createModalActive }
         })
         console.log(this.state.createModalActive);
     }
@@ -171,38 +183,43 @@ export default class GigIndex extends React.Component<AcceptedProps, GigState>{
         updatedAt: string;
         userId: number;
         posterName: string
-    }){
-        this.setState(()=>{ return {gigToEdit: gig}})
+    }) {
+        this.setState(() => { return { gigToEdit: gig } })
         console.log(this.state.gigToEdit);
     }
 
-    editModal(){
-        this.setState((state)=>{return{editModalActive: !state.editModalActive}})
+    editModal() {
+        this.setState((state) => { return { editModalActive: !state.editModalActive } })
     }
 
 
-    render(){
-        return(
+    render() {
+        return (
             <FullPage>
                 {/* <Filter /> */}
                 <H>Gigs</H>
-                {localStorage.role !== 'Test' ?  
-                <ButtonDiv>
-                <button onClick={this.modalPopup}>+</button>
-                </ButtonDiv>
-                : null}
-                {this.state.createModalActive ? <PostGig gigFetch={this.gigFetch} modalPopup={this.modalPopup}/> : null}
-                {this.state.loading ? 
-                <div>
-                    <Loader type='Audio' color='#FF9F1C'/>
-                    <p>Loading...</p>
-                </div>
-                :
-                <GigsView>
-                    <GigTable allGigs={this.state.allGigs} gigFetch={this.gigFetch} gigToEdit={this.gigToEdit} editModal={this.editModal}/>
-                </GigsView> }
-                {this.state.editModalActive ? <GigEdit editModal={this.editModal} gigToEdit={this.state.gigToEdit} gigFetch={this.gigFetch}/> : null}
-                {this.state.editModalActive && localStorage.role === 'Admin' ? <AdminGigEdit editModal={this.editModal} gigToEdit={this.state.gigToEdit} gigFetch={this.gigFetch}/> : null}
+                {localStorage.role !== 'Test' ?
+                    <ButtonDiv>
+                        <button onClick={this.modalPopup}>+</button>
+                    </ButtonDiv>
+                    : null}
+                {this.state.createModalActive ? <PostGig gigFetch={this.gigFetch} modalPopup={this.modalPopup} /> : null}
+                <ContentDiv>
+                    <FilterBox>
+                        <p>Filter gigs here</p>
+                    </FilterBox>
+                    {this.state.loading ?
+                        <div>
+                            <Loader type='Audio' color='#FF9F1C' />
+                            <p>Loading...</p>
+                        </div>
+                        :
+                        <GigsView>
+                            <GigTable allGigs={this.state.allGigs} gigFetch={this.gigFetch} gigToEdit={this.gigToEdit} editModal={this.editModal} />
+                        </GigsView>}
+                </ContentDiv>
+                {this.state.editModalActive ? <GigEdit editModal={this.editModal} gigToEdit={this.state.gigToEdit} gigFetch={this.gigFetch} /> : null}
+                {this.state.editModalActive && localStorage.role === 'Admin' ? <AdminGigEdit editModal={this.editModal} gigToEdit={this.state.gigToEdit} gigFetch={this.gigFetch} /> : null}
 
             </FullPage>
         )

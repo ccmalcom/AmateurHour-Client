@@ -8,7 +8,7 @@ import CommentTable from "../comments/CommentTable";
 
 const ThisGig = styled.div`
     border: 1px solid black;
-    margin: 20px 0;
+    margin: 0 0 20px 0;
     background-color: white;
     height: fit-content
 `
@@ -22,6 +22,12 @@ height: fit-content;
 const DropdownDiv = styled.div`
     display: flex;
     justify-content: flex-end
+`
+
+const Constraints = styled.div`
+    display: flex;
+    width: 100%;
+    justify-content: space-evenly
 `
 
 type AcceptedProps={
@@ -105,6 +111,12 @@ export default class Gig extends React.Component<AcceptedProps, GigState>{
     viewCommentToggle(){
         this.setState((state)=>{return{viewComment: !state.viewComment}})
     }
+
+    dateConvert(timestamp: string){
+        const d = new Date( timestamp );
+        let date = d.toDateString() + ', ' + d.getHours() + ":" + d.getMinutes() ;
+        return date ;
+    }
     render(){
         return (
             <ThisGig key={this.props.index}>
@@ -116,30 +128,32 @@ export default class Gig extends React.Component<AcceptedProps, GigState>{
                         <DropdownMenu>
                             <DropdownItem header>Options</DropdownItem>
                             {localStorage.userId == this.props.gig.userId ? <DropdownItem onClick={() => { this.props.gigToEdit(this.props.gig); this.props.editModal() }}>Edit Gig</DropdownItem> : null}
-                            {localStorage.role === 'Admin' ? <DropdownItem onClick={() => { this.props.gigToEdit(this.props.gig); this.props.editModal() }}>Edit Gig</DropdownItem> : null}
                             {localStorage.userId == this.props.gig.userId ? <DropdownItem onClick={() => { this.deleteGig(this.props.gig.id) }}>Delete Gig</DropdownItem> : null}
+
+                            {/* ADMIN */}
+                            {localStorage.role === 'Admin' ? <DropdownItem onClick={() => { this.props.gigToEdit(this.props.gig); this.props.editModal() }}>Edit Gig</DropdownItem> : null}
                             {localStorage.role === 'Admin' ? <DropdownItem onClick={() => { this.adminDeleteGig(this.props.gig.id) }}>Delete Gig</DropdownItem> : null}
                         </DropdownMenu>
                     </UncontrolledDropdown>
                 </DropdownDiv>
                 <PostData>
                     <div>
-                        <h3>{this.props.gig.posterName}</h3>
-                        <h3>{this.props.gig.title}</h3>
-                        <h5>{this.props.gig.location}</h5>
+                        <h2>{this.props.gig.title}</h2>
+                        <p><strong>{this.props.gig.location}</strong></p>
+                        <p>{this.props.gig.posterName}</p>
+                        <p>{this.dateConvert(this.props.gig.createdAt)}</p>
                     </div>
-                    <div>
-                        <h5>{this.props.gig.size}</h5>
-                        <h5>{this.props.gig.instrument}</h5>
-                        <h5>{this.props.gig.genre}</h5>
-                    </div>
+                    <Constraints>
+                        <p><strong>Number of players:</strong> {this.props.gig.size}</p>
+                        <p><strong>Instrument(s): </strong>{this.props.gig.instrument}</p>
+                        <p><strong>Genre(s): </strong>{this.props.gig.genre}</p>
+                    </Constraints>
                     <div>
                         <p>{this.props.gig.content}</p>
                     </div>
                 </PostData>
                 <footer>
                     <div>
-                        <p>Likes</p>
                         <p >Comments: {this.props.gig.comments.length}</p>
                     </div>
                     <div>
