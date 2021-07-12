@@ -1,9 +1,17 @@
 import React from "react";
 import logo from '../../assets/logo.png';
 import styled from 'styled-components';
+import { Label, Input } from "reactstrap";
 
 const Logo = styled.img`
     width: 20vw
+`
+const Wrapper = styled.div`
+    height: 70%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-evenly
 `
 
 type AcceptedProps={
@@ -48,23 +56,23 @@ export default class Login extends React.Component<AcceptedProps, LoginState>{
 
     render(){
         return(
-            <div className='register'>
+            <Wrapper className='register'>
                 <Logo src={logo} alt="" />
             <form onSubmit={this.handleSubmit}>
                 <div>
-                    <label htmlFor="email">Email</label>
-                    <input name='email' type='email' value={this.state.email} required onChange={(e) => this.setState({email: e.target.value})} />
+                    <Label htmlFor="email">Email</Label>
+                    <Input name='email' type='email' value={this.state.email} required onChange={(e) => this.setState({email: e.target.value})} />
                 </div>
                 <div>
-                    <label htmlFor="password">Password</label>
-                    <input name='password' type='password' value={this.state.password} required onChange={(e) => this.setState({password: e.target.value})} />
+                    <Label htmlFor="password">Password</Label>
+                    <Input name='password' type='password' value={this.state.password} required onChange={(e) => this.setState({password: e.target.value})} />
                 </div>
                 <button type='submit'>Login</button>
                 <br />
             </form>
                 <p>No account?</p>
                 <button onClick={this.props.changeView}>Register</button>
-            </div>
+            </Wrapper>
         )
     }
 

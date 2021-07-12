@@ -30,6 +30,24 @@ const Constraints = styled.div`
     justify-content: space-evenly
 `
 
+const FlexDiv = styled.div`
+    display: flex;
+    width: 100%;
+    margin: auto;
+    justify-content: space-evenly;
+    padding-left: 50px
+`
+const Details = styled.div`
+    background-color: #C4C4C4;
+    display: flex;
+    align-items: center;
+    height: fit-content;
+    justify-content: center;
+    padding: 20px
+`
+const NoMarginText = styled.p`
+    margin: 0
+`
 type AcceptedProps={
     gig: {
         id: number;
@@ -139,18 +157,21 @@ export default class Gig extends React.Component<AcceptedProps, GigState>{
                 <PostData>
                     <div>
                         <h2>{this.props.gig.title}</h2>
-                        <p><strong>{this.props.gig.location}</strong></p>
+                        <FlexDiv>
+
                         <p>{this.props.gig.posterName}</p>
+                        <p><strong>{this.props.gig.location}</strong></p>
                         <p>{this.dateConvert(this.props.gig.createdAt)}</p>
+                        </FlexDiv>
                     </div>
                     <Constraints>
                         <p><strong>Number of players:</strong> {this.props.gig.size}</p>
                         <p><strong>Instrument(s): </strong>{this.props.gig.instrument}</p>
                         <p><strong>Genre(s): </strong>{this.props.gig.genre}</p>
                     </Constraints>
-                    <div>
-                        <p>{this.props.gig.content}</p>
-                    </div>
+                    <Details>
+                        <NoMarginText>{this.props.gig.content}</NoMarginText>
+                    </Details>
                 </PostData>
                 <footer>
                     <div>

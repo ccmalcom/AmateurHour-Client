@@ -1,10 +1,28 @@
 import React from "react";
-import { Tooltip } from 'reactstrap';
+import { Tooltip, Form, FormGroup, Input, Label } from 'reactstrap';
+import styled from 'styled-components';
 
+const FlexDiv = styled.div`
+    display: flex;
+    justify-content: space-evenly;
+    width: 100%
+`
+const FormContainer = styled.form`
+    height: 70%;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+`
+
+const RegisterDiv = styled.div`
+    height: 100%
+`
 type AcceptedProps={
     updateToken: (newToken: string, newUserId: number, newRole: string) => void,
     changeView: () => void,
-    isLoading: () => void
+    isLoading: () => void,
+    handleSubmit: ()=>void
 }
 
 type RegisterState={
@@ -30,8 +48,8 @@ export default class Register extends React.Component<AcceptedProps, RegisterSta
             email: '',
             password: '',
             instrumentString: '',
-            instrument: ['Trumpet'], //! should be array of strings
-            genre: ['Jazz'], //! should be array of strings
+            instrument: [], //! should be array of strings
+            genre: [], //! should be array of strings
             admin: 'User',
             tooltipOpen: false
         }
@@ -83,44 +101,46 @@ export default class Register extends React.Component<AcceptedProps, RegisterSta
 
     render(){
         return(
-            <div className='register'>
-            <form onSubmit={this.handleSubmit}>
-                <div>
-                    <label htmlFor="firstName">First Name</label>
-                    <input name='firstName' value={this.state.firstName} required onChange={(e) => this.setState({firstName: e.target.value})} />
-                    <label htmlFor="lastName">Last Name</label>
-                    <input name='lastName' value={this.state.lastName} required onChange={(e) => this.setState({lastName: e.target.value})} />
-                    <label htmlFor="zipCode">Zipcode</label>
-                    <input name='zipCode' type='number' value={this.state.zipcode} required onChange={(e) => this.setState({zipcode: Number(e.target.value)})} />
-                </div>
-                <div>
-                    <label htmlFor="email">Email</label>
-                    <input name='email' type='email' value={this.state.email} required onChange={(e) => this.setState({email: e.target.value})} />
-                </div>
-                <div>
-                    <label htmlFor="password">Password</label>
-                    <input name='password' id='password' type='password' pattern='^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9]).{8,}$'value={this.state.password} required onChange={(e) => this.setState({password: e.target.value})} />
+            <RegisterDiv className='register'>
+            <FormContainer onSubmit={this.handleSubmit}>
+                <FlexDiv>
+                    <Label htmlFor="firstName">First Name</Label>
+                    <Input name='firstName' value={this.state.firstName} required onChange={(e) => this.setState({firstName: e.target.value})} />
+                    <Label htmlFor="lastName">Last Name</Label>
+                    <Input name='lastName' value={this.state.lastName} required onChange={(e) => this.setState({lastName: e.target.value})} />
+                    <Label htmlFor="zipCode">Zipcode</Label>
+                    <Input name='zipCode' type='number' value={this.state.zipcode} required onChange={(e) => this.setState({zipcode: Number(e.target.value)})} />
+                </FlexDiv>
+                <FormGroup>
+                    <Label htmlFor="email">Email</Label>
+                    <Input name='email' type='email' value={this.state.email} required onChange={(e) => this.setState({email: e.target.value})} />
+                </FormGroup>
+                <FormGroup>
+                    <Label htmlFor="password">Password</Label>
+                    <Input name='password' id='password' type='password' pattern='^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9]).{8,}$'value={this.state.password} required onChange={(e) => this.setState({password: e.target.value})} />
                     <Tooltip placement='right' isOpen={this.state.tooltipOpen} target='password' toggle={this.toggle}>Password must: <ul>
                         <li>Be at least 8 characters</li>
                         <li>Contain at least 1 Uppercase letter</li>
                         <li>Contain at least 1 Number</li>
                         <li>May contain special characters (not required)</li>
                         </ul></Tooltip>
-                </div>
-                <div>
-                    <label htmlFor="instrument">Instrument(s)</label>
-                    <input name='instrument' value={this.state.instrument} required onChange={(e) => this.setState({instrument: Array(e.target.value)})} />
-                </div>
-                <div>
-                    <label htmlFor="genre">Genre(s)</label>
-                    <input name='genre' value={this.state.genre} required onChange={(e) => this.setState({genre: Array(e.target.value)})} />
-                </div>
+                </FormGroup>
+                <FormGroup>
+                    <Label htmlFor="instrument">Instrument(s)</Label>
+                    <Input name='instrument' value={this.state.instrument} placeholder='Trumpet, Guitar'required onChange={(e) => this.setState({instrument: Array(e.target.value)})} />
+                </FormGroup>
+                <FormGroup>
+                    <Label htmlFor="genre">Genre(s)</Label>
+                    <Input name='genre' value={this.state.genre} required onChange={(e) => this.setState({genre: Array(e.target.value)})} />
+                </FormGroup>
                 <button type='submit'>Get Started</button>
                 <br />
-            </form>
+            </FormContainer>
                 <p>Already have an account?</p>
                 <button onClick={this.props.changeView}>Login</button>
-            </div>
+                <p>Not ready to sign up? Click below for a sample view</p>
+                                <button onClick={this.props.handleSubmit}>Try it</button>
+            </RegisterDiv>
         )
     }
 

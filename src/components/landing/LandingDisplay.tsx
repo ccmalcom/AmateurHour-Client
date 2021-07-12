@@ -17,6 +17,7 @@ const RegLeft = styled.div`
     width: 50vw;
     background: linear-gradient( rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url(${regImg});
     background-size: cover;
+    padding: 5%
 `
 
 const LoginLeft = styled.div`
@@ -33,26 +34,21 @@ const LoginLeft = styled.div`
 `
 const Form = styled.div`
     height: 100vh;
-    width: 50vw
+    width: 50vw;
+    padding: 5% 5%;
 `
 
 const Logo = styled.img`
-    margin-top: 10%;
     width: 30vw
 `
 
 const Text = styled.p`
     color: #E2DBCA;
     width: 50%;
-    margin: 10% auto;
+    margin: 10% auto 5% auto;
     font-size: calc(12px + 0.5vw)
 `
-const Text2 = styled.p`
-    color: #E2DBCA;
-    width: 50%;
-    margin: auto;
-    font-size: calc(12px + 0.5vw)
-`
+
 
 const Heading = styled.h1`
     color: #E2DBCA;
@@ -65,6 +61,8 @@ const LoaderDiv = styled.div`
     align-items: center;
     height: 100vh
 `
+
+
 
 type AcceptedProps = {
     updateToken: (newToken: string, newUserId: number, newRole: string) => void
@@ -137,15 +135,12 @@ class Landing extends React.Component<AcceptedProps, LandingState>{
                                     performance outside of school. AmateurHour
                                     seeks to change that by connecting those of us
                                     who still love to play, but aren't in an orchestra.
-                                    <br /> <br /> <br />
+                                    <br /> <br />
                                     Sign up today, and keep playing.
                                 </Text>
-                                <Text2>Not ready to sign up? Click below for a sample view</Text2>
-                                <button onClick={this.handleSubmit}>Try it</button>
-
                             </RegLeft>
                             <Form>
-                                <Register updateToken={this.props.updateToken} changeView={this.changeView} isLoading={this.isLoading} />
+                                <Register updateToken={this.props.updateToken} changeView={this.changeView} isLoading={this.isLoading} handleSubmit={this.handleSubmit}/>
                             </Form>
                         </LandingDiv>}
                     </div>

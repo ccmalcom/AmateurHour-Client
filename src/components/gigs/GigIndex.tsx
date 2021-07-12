@@ -29,7 +29,7 @@ const FullPage = styled.div`
 `
 const H = styled.h1`
     color: #FF9F1C;
-    padding-top: 30px
+    padding: 30px 0
 `
 const ContentDiv = styled.div`
     display: flex;
