@@ -206,7 +206,7 @@ export default class GigIndex extends React.Component<AcceptedProps, GigState>{
                 {this.state.createModalActive ? <PostGig gigFetch={this.gigFetch} modalPopup={this.modalPopup} /> : null}
                 <ContentDiv>
                     <FilterBox>
-                        <p>Filter gigs here</p>
+                        <p>Filter gigs here, eventually, if I figure that out</p>
                     </FilterBox>
                     {this.state.loading ?
                         <div>

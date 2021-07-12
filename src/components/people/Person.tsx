@@ -4,6 +4,7 @@ import styled from 'styled-components';
 import defaultPic from '../../assets/default-profile.png'
 
 
+
 const ProfileBox = styled.div`
     margin-right: 10px;
     height: 20%;
@@ -45,6 +46,8 @@ type AcceptedProps = {
             }
         ]
     },
+    showProfile: ()=> void,
+    setUserId: (userId: number)=> void
 }
 
 type PersonState = {
@@ -81,7 +84,7 @@ export default class Person extends React.Component<AcceptedProps, PersonState>{
     }
     zipToLocation() {
         this.setState({ dataFetched: true })
-        fetch(`http://api.zippopotam.us/us/${this.props.user.zipCode}`)
+        fetch(`https://api.zippopotam.us/us/${this.props.user.zipCode}`)
             .then(res => res.json())
             .then(data => this.setState({ locData: data }))
             .then(() => { console.log(this.state.locData) })
@@ -97,8 +100,8 @@ export default class Person extends React.Component<AcceptedProps, PersonState>{
                 <div>
                     <p><strong>Location:</strong></p>
                     <p>{this.state.locData.places[0]["place name"]},{this.state.locData.places[0]["state abbreviation"]}</p>
-                    <p><strong>Email:</strong></p>
-                    <p>{this.props.user.emailAddress}</p>
+                    {/* <p><strong>Email:</strong></p>
+                    <p>{this.props.user.emailAddress}</p> */}
                 </div>
                 {/* <img src={gravatarUrl(`${this.props.user.emailAddress}`, {size: 200, default: `${defaultPic}`})} alt="" /> */}
                 <div>
@@ -107,7 +110,8 @@ export default class Person extends React.Component<AcceptedProps, PersonState>{
                     <p><strong>Genre(s):</strong></p>
                     <p>{this.props.user.genre}</p>
                 </div>
-                <button >View Profile</button>
+                <button onClick={()=>{this.props.showProfile();
+                this.props.setUserId(this.props.user.id)}}>View Profile</button>
             </ProfileBox>
 
         )

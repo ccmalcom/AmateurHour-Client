@@ -1,12 +1,11 @@
 import React from 'react';
-import UGigTable from './UGigTable';
 import 'react-loader-spinner/dist/loader/css/react-spinner-loader.css'
 import Loader from 'react-loader-spinner';
 import styled from 'styled-components';
-import UGigEdit from './UGigEdit';
+import ThisGigTable from './ThisGigTable';
 
 const GigsView = styled.div`
-    height: 87%;
+    height: 66.5vh;
     overflow: auto;
     width: 100%;
     margin: auto;
@@ -17,7 +16,7 @@ const H = styled.h1`
 `
 
 type AcceptedProps={
-
+    userId: number
 }
 
 type GigState ={
@@ -64,7 +63,7 @@ type GigState ={
     editModalActive: boolean
 }
 
-export default class UGigIndex extends React.Component<AcceptedProps, GigState>{
+export default class ThisGigIndex extends React.Component<AcceptedProps, GigState>{
     constructor(props: AcceptedProps){
         super(props)
         this.state={
@@ -108,10 +107,7 @@ export default class UGigIndex extends React.Component<AcceptedProps, GigState>{
             },
             editModalActive: false
         }
-        this.modalPopup = this.modalPopup.bind(this)
         this.gigFetch = this.gigFetch.bind(this)
-        this.gigToEdit = this.gigToEdit.bind(this)
-        this.editModal = this.editModal.bind(this)
     }
 
     componentDidMount(){
@@ -120,7 +116,7 @@ export default class UGigIndex extends React.Component<AcceptedProps, GigState>{
     }
     gigFetch(){
         this.setState({loading: true})
-        fetch(`https://ccm-amateurhour.herokuapp.com/gig/view/user/${localStorage.userId}`, {
+        fetch(`https://ccm-amateurhour.herokuapp.com/gig/view/user/${this.props.userId}`, {
             method: 'GET',
             headers: new Headers({
                 'Content-Type': 'application/json',
@@ -135,51 +131,23 @@ export default class UGigIndex extends React.Component<AcceptedProps, GigState>{
     .then(()=>{this.setState({loading: false})})
 }
     
-    modalPopup(){
-        this.setState((state)=>{
-            return {createModalActive: !state.createModalActive}
-        })
-        console.log(this.state.createModalActive);
-    }
-
-    gigToEdit(gig: {
-        id: number;
-        location: string;
-        title: string;
-        instrument: Array<string>;
-        genre: Array<string>;
-        size: number;
-        content: string;
-        createdAt: string;
-        updatedAt: string;
-        userId: number;
-        posterName: string
-    }){
-        this.setState(()=>{ return {gigToEdit: gig}})
-        console.log(this.state.gigToEdit);
-    }
-
-    editModal(){
-        this.setState((state)=>{return{editModalActive: !state.editModalActive}})
-    }
-
 
     render(){
         return(
-            <>
+            <div>
                 <H>Gigs</H>
+                <GigsView>
                 {this.state.loading ? 
                 <div>
                     <Loader type='Audio' color='#FF9F1C'/>
                     <p>Loading...</p>
                 </div>
                 :
-                <GigsView>
-                    <UGigTable userGigs={this.state.userGigs} gigFetch={this.gigFetch} gigToEdit={this.gigToEdit} editModal={this.editModal}/>
-                </GigsView> }
-                {this.state.editModalActive ? <UGigEdit editModal={this.editModal} gigToEdit={this.state.gigToEdit} gigFetch={this.gigFetch}/> : null}
+                    <ThisGigTable userGigs={this.state.userGigs} gigFetch={this.gigFetch} />
+                }
+                </GigsView> 
 
-            </>
+            </div>
         )
     }
 

@@ -1,27 +1,24 @@
 import React from "react";
-import UserProfile from "./UserProfile";
 import styled from "styled-components";
-import UGigIndex from "./userGigs/UGigIndex";
-import ProfileEdit from "./ProfileEdit";
-import DeleteUser from "./DeleteUser";
+import ThisProfile from "./ThisProfile";
+import ThisGigIndex from "./thisGigs/ThisGigIndex";
 
 const FullPage = styled.div`
-    height: 100vh;
+    height: 80vh;
     display: flex;
     align-items: center;
     justify-content: center;
-    background-color: #707070
+    margin-top: 10px
 `
 const PostsBox = styled.div`
     margin-left: 10px;
-    height: 80%;
+    height: 80vh;
     border: 1px solid black;
     width: 50vw;
     background-color: #FDFFFC
 `
 type AcceptedProps = {
-    clearSession: ()=> void
-
+    userId: number
 }
 
 type IndexState = {
@@ -54,7 +51,7 @@ type IndexState = {
     deleteModalActive: boolean,
 }
 
-export default class ProfileIndex extends React.Component<AcceptedProps, IndexState>{
+export default class ThisIndex extends React.Component<AcceptedProps, IndexState>{
     constructor(props: AcceptedProps) {
         super(props)
         this.state = {
@@ -86,9 +83,7 @@ export default class ProfileIndex extends React.Component<AcceptedProps, IndexSt
             editModalActive: false,
             deleteModalActive: false,
         }
-        this.editModal = this.editModal.bind(this)
         this.getUserInfo = this.getUserInfo.bind(this)
-        this.deleteModal = this.deleteModal.bind(this)
     }
     componentDidMount() {
         this.getUserInfo()
@@ -97,7 +92,7 @@ export default class ProfileIndex extends React.Component<AcceptedProps, IndexSt
 
     getUserInfo() {
         console.log('getting user info');
-        fetch(`https://ccm-amateurhour.herokuapp.com/user/view/${localStorage.userId}`, {
+        fetch(`https://ccm-amateurhour.herokuapp.com/user/view/${this.props.userId}`, {
             method: 'GET',
             headers: new Headers({
                 'Content-Type': 'application/json',
@@ -108,13 +103,6 @@ export default class ProfileIndex extends React.Component<AcceptedProps, IndexSt
             .then(userData =>  this.setState({ userData: userData }))
             .then(()=>{console.log(this.state.userData)})
             .catch(err => console.log(err))
-    }
-    editModal(){
-        this.setState((state)=>{return{editModalActive: !state.editModalActive}})
-    }
-
-    deleteModal(){
-        this.setState((state) =>{return{deleteModalActive: !state.deleteModalActive}})
     }
 
     componentWillUnmount(){
@@ -147,17 +135,11 @@ export default class ProfileIndex extends React.Component<AcceptedProps, IndexSt
 }
     render() {
         return (
-            <FullPage>
-                <UserProfile userData={this.state.userData} editModal={this.editModal} deleteModal={this.deleteModal}/>
-                <PostsBox>
-                    <UGigIndex />
+            <FullPage id='ProfileAndGigs'>
+                <ThisProfile userData={this.state.userData} />
+                <PostsBox id='GigsDiv'>
+                    <ThisGigIndex userId={this.props.userId}/>
                 </PostsBox>
-                {this.state.editModalActive ? 
-                <ProfileEdit userData={this.state.userData} editModal={this.editModal} userFetch={this.getUserInfo}/>
-                : null }
-                {this.state.deleteModalActive ? 
-                <DeleteUser  deleteModal={this.deleteModal} clearSession={this.props.clearSession} />
-                : null}
             </FullPage>
         )
     }

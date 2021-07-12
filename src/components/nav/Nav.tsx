@@ -4,7 +4,6 @@ import ProfileIndex from '../profile/ProfileIndex'
 import GigIndex from '../gigs/GigIndex';
 import styled from 'styled-components';
 import logo from '../../assets/logo.png';
-import Landing from '../landing/LandingDisplay';
 import './Nav.css'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSignOutAlt } from '@fortawesome/free-solid-svg-icons';

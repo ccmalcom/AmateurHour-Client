@@ -52,6 +52,8 @@ const GigTable =(props: AcceptedProps)=>{
             return <Gig gig={gig} index={index} gigToEdit={props.gigToEdit} gigFetch={props.gigFetch} editModal={props.editModal}/>
         })
     }
+
+    
         return (
             <div>
                 {gigMapper()}

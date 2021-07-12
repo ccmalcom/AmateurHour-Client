@@ -27,12 +27,14 @@ type AcceptedProps={
             }
         ]
     }],
+    showProfile: ()=>void,
+    setUserId:(userId: number)=>void
 }
 const PeopleTable =(props: AcceptedProps)=>{
 
     const peopleMapper = () => {
         return props.userData.map((user, index) => {
-            return <Person user={user} />
+            return <Person showProfile={props.showProfile} user={user} setUserId={props.setUserId}/>
         })
     }
         return (

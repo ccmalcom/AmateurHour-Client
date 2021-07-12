@@ -44,8 +44,6 @@ type AcceptedProps={
             }
         ]
     },
-    editModal: ()=>void,
-    deleteModal: ()=>void
 }
 
 type ProfileState={
@@ -59,7 +57,7 @@ type ProfileState={
     dataFetched: boolean,
 }
 
-export default class UserProfile extends React.Component<AcceptedProps, ProfileState>{
+export default class ThisProfile extends React.Component<AcceptedProps, ProfileState>{
     constructor(props: AcceptedProps){
         super(props)
         this.state={
@@ -116,12 +114,6 @@ export default class UserProfile extends React.Component<AcceptedProps, ProfileS
                 <p><strong>Social Links:</strong></p>
                 {this.props.userData.socialLinks !== null?
                 <div>{this.linkMapper()}</div>    
-                : null}
-                {localStorage.role !== 'Test' ?  
-                <button onClick={this.props.editModal}>Edit Profile</button>
-                : null}
-                {localStorage.role !== 'Test' ?  
-                <button onClick={this.props.deleteModal}>Delete Profile</button>
                 : null}
             </ProfileBox>
 
