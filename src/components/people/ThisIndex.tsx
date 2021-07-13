@@ -6,18 +6,17 @@ import AdminProfileEdit from "./AdminProfileEdit";
 import AdminDeleteUser from "./AdminDeleteUser";
 
 const FullPage = styled.div`
-    height: 80vh;
+    height: 100vh;
     display: flex;
-    align-items: center;
     justify-content: center;
     margin-top: 2.5%
 `
 const PostsBox = styled.div`
     margin-left: 10px;
-    height: 80vh;
-    border: 1px solid black;
+    height: 80%;
+    // border: 1px solid black;
     width: 50vw;
-    background-color: #FDFFFC
+    background-color: transparent
 `
 type AcceptedProps = {
     userId: number,

@@ -6,14 +6,13 @@ import ThisGigTable from './ThisGigTable';
 import AdminGigEdit from '../../gigs/AdminGigEdit';
 
 const GigsView = styled.div`
-    height: 66.5vh;
+    height: 92%;
     overflow: auto;
     width: 100%;
     margin: auto;
 `
 const H = styled.h1`
     color: #FF9F1C;
-    padding-top: 30px
 `
 
 type AcceptedProps={
@@ -155,20 +154,20 @@ export default class ThisGigIndex extends React.Component<AcceptedProps, GigStat
 
     render(){
         return(
-            <div>
+            <>
                 <H>Gigs</H>
-                <GigsView>
                 {this.state.loading ? 
                 <div>
                     <Loader type='Audio' color='#FF9F1C'/>
                     <p>Loading...</p>
                 </div>
                 :
+                    <GigsView>
                     <ThisGigTable userGigs={this.state.userGigs} gigFetch={this.gigFetch} gigToEdit={this.gigToEdit} editModal={this.editModal}/>
-                }
                 </GigsView> 
+                }
                 {this.state.editModalActive && localStorage.role === 'Admin' ? <AdminGigEdit editModal={this.editModal} gigToEdit={this.state.gigToEdit} gigFetch={this.gigFetch} /> : null}
-            </div>
+            </>
         )
     }
 

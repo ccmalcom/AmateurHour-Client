@@ -15,9 +15,9 @@ const FullPage = styled.div`
 const PostsBox = styled.div`
     margin-left: 10px;
     height: 80%;
-    border: 1px solid black;
+    // border: 1px solid black;
     width: 50vw;
-    background-color: #FDFFFC
+    background-color: transparent
 `
 type AcceptedProps = {
     clearSession: ()=> void

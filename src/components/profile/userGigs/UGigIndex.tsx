@@ -6,14 +6,13 @@ import styled from 'styled-components';
 import UGigEdit from './UGigEdit';
 
 const GigsView = styled.div`
-    height: 87%;
+    height: 92%;
     overflow: auto;
     width: 100%;
     margin: auto;
 `
 const H = styled.h1`
     color: #FF9F1C;
-    padding-top: 30px
 `
 
 type AcceptedProps={
