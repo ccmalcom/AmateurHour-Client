@@ -25,15 +25,16 @@ const ButtonDiv = styled.div`
 `
 const Button1 = styled.div`
     background-color: #FF9f1c;
-    padding: 10px;
+    padding: 10px 20px;
     border-radius: 30px;
-    border: 1px solid black;
+    border: none;
+    color: white
 `
 const Button2 = styled.div`
     background-color: #891A1C;
-    padding: 10px;
+    padding: 10px 20px;
     border-radius: 30px;
-    border: 1px solid black;
+    border: none;
     color: white
 `
 
