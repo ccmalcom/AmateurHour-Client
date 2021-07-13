@@ -11,7 +11,8 @@ type EditState = {
     instrument: Array<string>,
     genre: Array<string>,
     bio: string,
-    socialLinks: Array<string>
+    socialLinks: Array<string>,
+    role: string
 }
 
 type AcceptedProps = {
@@ -55,7 +56,8 @@ export default class AdminProfileEdit extends React.Component<AcceptedProps, Edi
             genre: props.userData.genre,
             instrument: props.userData.instrument,
             bio: props.userData.bio,
-            socialLinks: props.userData.socialLinks
+            socialLinks: props.userData.socialLinks,
+            role: 'User'
         }
         this.profileUpdate = this.profileUpdate.bind(this)
     }
@@ -73,7 +75,8 @@ export default class AdminProfileEdit extends React.Component<AcceptedProps, Edi
                 genre: this.state.genre,
                 instrument: this.state.instrument,
                 bio: this.state.bio,
-                socialLinks: this.state.socialLinks
+                socialLinks: this.state.socialLinks,
+                admin: this.state.role
             }),
             headers: new Headers({
                 'Content-Type': 'application/json',
@@ -131,6 +134,10 @@ export default class AdminProfileEdit extends React.Component<AcceptedProps, Edi
                             <FormGroup>
                                 <Label>Social Links</Label>
                                 <Input type='text' value={this.state.socialLinks} placeholder='https://twitter.com/johndoe' onChange={(e) => this.setState({ socialLinks: Array(e.target.value) })} />
+                            </FormGroup>
+                            <FormGroup>
+                                <Label>Make Admin?</Label>
+                                <Input type='checkbox'  onClick={() => this.setState({ role: 'Admin' })} />
                             </FormGroup>
 
                             <Button type='submit'>Update</Button>
