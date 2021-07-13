@@ -47,6 +47,18 @@ const Details = styled.div`
 const NoMarginText = styled.p`
     margin: 0
 `
+
+const Button = styled.button`
+    background-color: #FF9f1c;
+    padding: 10px 20px;
+    border-radius: 30px;
+    border: none;
+    margin-bottom: 10px;
+    color: white
+`
+const H = styled.h2`
+    color: #891A1C
+`
 type AcceptedProps = {
     userGigs: [
         {
@@ -127,7 +139,7 @@ class ThisGigTable extends React.Component<AcceptedProps, TableState>{
                         {localStorage.role === 'Admin'?
                 <DropdownDiv>
                     <UncontrolledDropdown>
-                        <DropdownToggle caret>
+                    <DropdownToggle style={{backgroundColor: '#891A1C', border: 'none'}} caret>
                             <FontAwesomeIcon icon={faEllipsisH} />
                         </DropdownToggle>
                         <DropdownMenu>
@@ -141,7 +153,7 @@ class ThisGigTable extends React.Component<AcceptedProps, TableState>{
                 : null }
                         <PostData>
                             <div>
-                                <h2>{gig.title}</h2>
+                                <H>{gig.title}</H>
                                 <FlexDiv>
 
                                     <p>{gig.posterName}</p>
@@ -163,7 +175,7 @@ class ThisGigTable extends React.Component<AcceptedProps, TableState>{
                                 <p >Comments: {gig.comments.length}</p>
                             </div>
                             <div>
-                                <button onClick={this.viewCommentToggle}>Comments</button>
+                                <Button onClick={this.viewCommentToggle}>Comments</Button>
                             </div>
                         </footer>
                         <div>

@@ -37,9 +37,9 @@ const AdminDeleteUser = (props: AcceptedProps) => {
                     <h3>Delete Profile</h3>
                 </ModalHeader>
                 <ModalBody>
-                    <p>We're sad to see you go. As an extra layer of security, please re-type your password to confirm deletion</p>
-                    <input type="password" />
-                    <button onClick={deleteUser}>Delete</button>
+                    <p>Are you sure you want to delete this user?</p>
+                    <button onClick={deleteUser}>Yes</button>
+                    <button onClick={props.deleteModal}>Cancel</button>
                 </ModalBody>
             </Modal>
         </div>

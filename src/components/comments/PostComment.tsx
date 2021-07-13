@@ -1,4 +1,21 @@
 import React, { MouseEvent } from "react";
+import styled from 'styled-components';
+
+const MainDiv = styled.div`
+    height: fit-content;
+    padding: 10px
+`
+
+const InputDiv = styled.div`
+    height: 54px;
+    width: 100%;
+    display: flex;
+    justify-content: center
+`
+const Button = styled.button`
+    background-color: #891A1C;
+    color: white
+`
 
 type AcceptedProps ={
     gigId: number,
@@ -37,12 +54,14 @@ export default class PostComment extends React.Component<AcceptedProps, IndexSta
 
     render(){
         return(
-            <div>
+            <MainDiv>
                 <hr />
                 <label htmlFor="comment">New Comment:</label>
+                <InputDiv>
                 <textarea name="comment" id="comment" onChange={(e)=>{this.setState({content: e.target.value})}}></textarea>
-                <button onClick={(e) =>{this.CommentPost(e)}}>Send</button>
-            </div>
+                <Button onClick={(e) =>{this.CommentPost(e)}}>Send</Button>
+                </InputDiv>
+            </MainDiv>
         )
     }
 }

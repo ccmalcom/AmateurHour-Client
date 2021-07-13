@@ -1,7 +1,7 @@
 import React, { FormEvent } from "react";
 import logo from '../../assets/logo.png';
 import styled from 'styled-components';
-import { Label, Input } from "reactstrap";
+import { Label, Input, Form, FormGroup } from "reactstrap";
 import Loader from 'react-loader-spinner';
 
 
@@ -13,7 +13,9 @@ const Wrapper = styled.div`
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: space-evenly
+    justify-content: space-evenly;
+    color: #891A1C;
+    font-weight: bold
 `
 const ErrorBox = styled.div`
     border: 1px solid #891A1C;
@@ -29,6 +31,26 @@ const LoaderDiv = styled.div`
     align-items: center;
     height: 100%
 `
+const Button = styled.button`
+    width: 50%;
+    padding: 10px 0;
+    margin: 0 auto;
+    background-color: #FF9F1C;
+    color: white;
+    font-weight: bold;
+    border: none;
+    border-radius: 20px
+    `
+    const Button2 = styled.button`
+    width: 100%;
+    padding: 10px 0;
+    margin: 0 auto 30px;
+    background-color: #891A1C;
+    color: white;
+    font-weight: bold;
+    border: none;
+    border-radius: 20px
+    `
 
 type AcceptedProps = {
     updateToken: (newToken: string, newUserId: number, newRole: string) => void,
@@ -95,20 +117,23 @@ export default class Login extends React.Component<AcceptedProps, LoginState>{
                         <Loader type='Audio' color='#FF9F1C' />
                     </LoaderDiv> :
                     <>
-                        <form onSubmit={this.handleSubmit}>
-                            <div>
+                        <Form onSubmit={this.handleSubmit}>
+                            <FormGroup>
                                 <Label htmlFor="email">Email</Label>
                                 <Input name='email' type='email' value={this.state.email} required onChange={(e) => this.setState({ email: e.target.value })} />
-                            </div>
-                            <div>
+                            </FormGroup>
+                            <FormGroup>
                                 <Label htmlFor="password">Password</Label>
                                 <Input name='password' type='password' value={this.state.password} required onChange={(e) => this.setState({ password: e.target.value })} />
-                            </div>
-                            <button type='submit'>Login</button>
+                            </FormGroup>
                             <br />
-                        </form>
+                            <Button type='submit'>Login</Button>
+                            <br />
+                        </Form>
+                        <div>
                         <p>No account?</p>
-                        <button onClick={this.props.changeView}>Register</button>
+                        <Button2 onClick={this.props.changeView}>Register</Button2>
+                        </div>
                     </>
                 }
             </Wrapper>

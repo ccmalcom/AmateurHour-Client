@@ -10,7 +10,7 @@ const FullPage = styled.div`
     display: flex;
     align-items: center;
     justify-content: center;
-    margin-top: 10px
+    margin-top: 2.5%
 `
 const PostsBox = styled.div`
     margin-left: 10px;

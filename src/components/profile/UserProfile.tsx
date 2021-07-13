@@ -17,6 +17,25 @@ const ProfileImg = styled.img`
     height: calc(75px + 5vw);
     width: calc(75px + 5vw)
 `
+const ButtonDiv = styled.div`
+    display: flex;
+    width: 55%;
+    margin: 20px auto 0;
+    justify-content: space-between    
+`
+const Button1 = styled.div`
+    background-color: #FF9f1c;
+    padding: 10px;
+    border-radius: 30px;
+    border: 1px solid black;
+`
+const Button2 = styled.div`
+    background-color: #891A1C;
+    padding: 10px;
+    border-radius: 30px;
+    border: 1px solid black;
+    color: white
+`
 
 type AcceptedProps={
     userData:{
@@ -117,12 +136,14 @@ export default class UserProfile extends React.Component<AcceptedProps, ProfileS
                 {this.props.userData.socialLinks !== null?
                 <div>{this.linkMapper()}</div>    
                 : null}
+                <ButtonDiv>
                 {localStorage.role !== 'Test' ?  
-                <button onClick={this.props.editModal}>Edit Profile</button>
+                <Button1 onClick={this.props.editModal}>Edit Profile</Button1>
                 : null}
                 {localStorage.role !== 'Test' ?  
-                <button onClick={this.props.deleteModal}>Delete Profile</button>
+                <Button2 onClick={this.props.deleteModal}>Delete Profile</Button2>
                 : null}
+                </ButtonDiv>
             </ProfileBox>
 
         )

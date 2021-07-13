@@ -42,36 +42,36 @@ export default class Comment extends React.Component<AcceptedProps, CommentState
     editDisplay() {
         this.setState((state) => { return { editOn: !state.editOn } })
     }
-
+    dateConvert(timestamp: string) {
+        const d = new Date(timestamp);
+        let date = d.toDateString() + ', ' + d.getHours() + ":" + d.getMinutes();
+        return date;
+    }
     render() {
         return (
             <div>
                 <hr />
-                {localStorage.role !== 'Test' ?
-                    <div>
-                        {localStorage.userId == this.props.comment.userId || localStorage.userId == this.props.gigId || localStorage.role === 'Admin' ? <DropdownDiv>
-                            <UncontrolledDropdown>
-                                <DropdownToggle caret>
-                                    <FontAwesomeIcon icon={faEllipsisH} />
-                                </DropdownToggle>
-                                {localStorage.role === 'User' ?<DropdownMenu>
-                                    <DropdownItem header>Options</DropdownItem>
-                                    {localStorage.userId == this.props.comment.userId ? 
-                                    <DropdownItem onClick={() => { this.editDisplay() }} >Edit</DropdownItem>
-                                    : null }
-                                    <DropdownItem onClick={() => { this.props.deleteComment(this.props.comment.id) }} >Delete </DropdownItem>
-                                </DropdownMenu> : null}
-                                {localStorage.role === 'Admin'?
-                                <DropdownMenu>
-                                    <DropdownItem header>Options</DropdownItem>
-                                    <DropdownItem onClick={() => { this.props.deleteCommentAdmin(this.props.comment.id) }} >Delete </DropdownItem>
-                                </DropdownMenu> : null}
-                            </UncontrolledDropdown>
-                        </DropdownDiv> : null}
-                    </div>
-                    : null}
+                {localStorage.userId == this.props.comment.userId && localStorage.role !== 'Test' || localStorage.userId == this.props.gigId && localStorage.role !== 'Test' || localStorage.role === 'Admin' ? <DropdownDiv>
+                    <UncontrolledDropdown>
+                        <DropdownToggle style={{ backgroundColor: '#891A1C', border: 'none', marginRight: '5px' }} caret>
+                            <FontAwesomeIcon icon={faEllipsisH} />
+                        </DropdownToggle>
+                        {localStorage.role === 'User' ? <DropdownMenu>
+                            <DropdownItem header>Options</DropdownItem>
+                            {localStorage.userId == this.props.comment.userId ?
+                                <DropdownItem onClick={() => { this.editDisplay() }} >Edit</DropdownItem>
+                                : null}
+                            <DropdownItem onClick={() => { this.props.deleteComment(this.props.comment.id) }} >Delete </DropdownItem>
+                        </DropdownMenu> : null}
+                        {localStorage.role === 'Admin' ?
+                            <DropdownMenu>
+                                <DropdownItem header>Options</DropdownItem>
+                                <DropdownItem onClick={() => { this.props.deleteCommentAdmin(this.props.comment.id) }} >Delete </DropdownItem>
+                            </DropdownMenu> : null}
+                    </UncontrolledDropdown>
+                </DropdownDiv> : null}
                 <p>{this.props.comment.posterName}</p>
-                <p>{this.props.comment.createdAt}</p>
+                <p>{this.dateConvert(this.props.comment.createdAt)}</p>
                 {this.state.editOn ? <CommentEdit gigFetch={this.props.gigFetch} comment={this.props.comment} editDisplay={this.editDisplay} /> : <p>{this.props.comment.content}</p>}
 
             </div>

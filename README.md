@@ -1,46 +1,32 @@
-# Getting Started with Create React App
+# Welcome to AmateurHour!
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## What is it?
 
-## Available Scripts
+AmateurHour is a social media app targeted at people who are musicians but do not continue into a music career. As someone who was involved in music for most of my life, the post-school landscape for non-professional musicians is almost non-existent. This app seeks to bridge that gap and connect people so that they can keep playing. This application was completed as a final project for the Eleven Fifty Academy Full Stack Web Development course.
 
-In the project directory, you can run:
+### Check it out!
+Deployed link => (https://client-amateurhour.herokuapp.com/)
 
-### `npm start`
+### Style
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+The app uses StyledComponents, Reactstrap, and a tiny bit of CSS to create an engaging user experience. 
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+### Languages/Frameworks
 
-### `npm test`
+The app implements TypeScript using the React.js framework. Additionally, the project was completed without using hooks, relying instead on React Class Components. Hooks are newer and much less verbose, but project requirements called for Class Components instead.
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+### Does it CRUD?
 
-### `npm run build`
+It does! AmateurHour utilizes 3 tables from the server (https://github.com/ccmalcom/AmateurHour-Server) and lets the user Create, Read, Update, and Delete on all three. 
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+### User Roles
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+This application has 3 user roles: Admin, User, and Test. When you create an account, the default class of 'User' is assigned, and allows you to access all main features of the app. The Admin role has the ability to moderate content and users by editing or deleting posts and profiles. The Test class allows you to try out the app before you register, for those who don't want to commit to registering just yet. 
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+## Where does the data come from?
 
-### `npm run eject`
+I'm so glad you asked! The data pulls from a server deployed via heroku. You can view the source code here => (https://github.com/ccmalcom/AmateurHour-Server)
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+## What's next?
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
+Of course, a project is never actually complete. In future versions, I would like to add the ability to send messages to other users, add friends, upload profile pictures, and change profile styles. 

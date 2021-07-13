@@ -19,7 +19,18 @@ const ProfileImg = styled.img`
     height: calc(75px + 5vw);
     width: calc(75px + 5vw)
 `
-
+const Button = styled.button`
+    background-color: #FF9F1C;
+    color: #FDFFFC;
+    border: none;
+    padding: 20px 10px;
+    border-radius: 20px;
+    transition: .25s ease-out;
+    &:hover{
+        transform: scale(1.1);
+        transition: .25s ease
+    }
+`
 type AcceptedProps = {
     user: {
         id: number,
@@ -110,8 +121,8 @@ export default class Person extends React.Component<AcceptedProps, PersonState>{
                     <p><strong>Genre(s):</strong></p>
                     <p>{this.props.user.genre}</p>
                 </div>
-                <button onClick={()=>{this.props.showProfile();
-                this.props.setUserId(this.props.user.id)}}>View Profile</button>
+                <Button onClick={()=>{this.props.showProfile();
+                this.props.setUserId(this.props.user.id)}}>View Profile</Button>
             </ProfileBox>
 
         )

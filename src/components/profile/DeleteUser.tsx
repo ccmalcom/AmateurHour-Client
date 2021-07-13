@@ -1,7 +1,40 @@
 import React from "react";
-import { Button, Form, FormGroup, Label, Input, Modal, ModalHeader, ModalBody, } from "reactstrap";
+import { Modal, ModalHeader, ModalBody, } from "reactstrap";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowAltCircleLeft } from '@fortawesome/free-solid-svg-icons';
+import styled from 'styled-components';
+
+const Button1 = styled.div`
+    background-color: #FF9f1c;
+    padding: 10px;
+    border-radius: 30px;
+    border: 1px solid black;
+    width: 100%;
+    text-align: center
+    `
+    const Button2 = styled.div`
+    background-color: #891A1C;
+    padding: 10px;
+    border-radius: 30px;
+    border: 1px solid black;
+    color: white;
+    width: 100%;
+    text-align: center
+`
+
+const FlexDiv = styled.div`
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center
+`
+const ButtonDiv = styled.div`
+    display: flex;
+    width: 55%;
+    margin: 20px auto 0;
+    justify-content: space-between    
+`
+
 
 type AcceptedProps = {
     deleteModal: ()=> void,
@@ -29,14 +62,19 @@ const DeleteUser = (props: AcceptedProps) => {
                 aria-labelledby="contained-modal-title-vcenter"
                 centered
             >
-                <ModalHeader>
-                    <button onClick={props.deleteModal}><FontAwesomeIcon icon={faArrowAltCircleLeft} size="3x" /></button>
+                <ModalHeader style={{display: 'flex', justifyContent: 'center'}}>
                     <h3>Delete Profile</h3>
                 </ModalHeader>
                 <ModalBody>
-                    <p>We're sad to see you go. As an extra layer of security, please re-type your password to confirm deletion</p>
-                    <input type="password" />
-                    <button onClick={deleteUser}>Delete</button>
+                    <FlexDiv>
+
+                    <p>We're sad to see you go. This action is permanant and will delete your profile, gigs, and comments. Please verify below that you want to delete.</p>
+                    <ButtonDiv>
+
+                    <Button1 onClick={props.deleteModal}>Cancel</Button1>
+                    <Button2 onClick={deleteUser}>Delete</Button2>
+                    </ButtonDiv>
+                    </FlexDiv>
                 </ModalBody>
             </Modal>
         </div>

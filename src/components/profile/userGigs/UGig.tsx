@@ -9,7 +9,8 @@ const ThisGig = styled.div`
     border: 1px solid black;
     margin: 20px 0;
     background-color: white;
-    height: fit-content
+    height: fit-content;
+    padding: 5px 0
 `
 const PostData = styled.div`
 display: flex;
@@ -45,6 +46,17 @@ const Details = styled.div`
 `
 const NoMarginText = styled.p`
     margin: 0
+`
+const Button = styled.button`
+    background-color: #FF9f1c;
+    padding: 10px 20px;
+    border-radius: 30px;
+    border: none;
+    margin-bottom: 10px;
+    color: white
+`
+const H = styled.h2`
+    color: #891A1C
 `
 
 type AcceptedProps = {
@@ -129,7 +141,7 @@ export default class Gig extends React.Component<AcceptedProps, GigState>{
                     { localStorage.role !== 'Test' ?
                 <DropdownDiv>
                     <UncontrolledDropdown>
-                        <DropdownToggle caret>
+                    <DropdownToggle style={{backgroundColor: '#891A1C', border: 'none', marginRight: '5px'}} caret>
                             <FontAwesomeIcon icon={faEllipsisH} />
                         </DropdownToggle>
                         <DropdownMenu>
@@ -142,7 +154,7 @@ export default class Gig extends React.Component<AcceptedProps, GigState>{
                 : null}
                 <PostData>
                     <div>
-                        <h2>{this.props.gig.title}</h2>
+                        <H>{this.props.gig.title}</H>
                         <FlexDiv>
                         <p>{this.props.gig.posterName}</p>
                         <p><strong>{this.props.gig.location}</strong></p>
@@ -160,11 +172,10 @@ export default class Gig extends React.Component<AcceptedProps, GigState>{
                 </PostData>
                 <footer>
                     <div>
-                        <p>Likes</p>
                         <p >Comments: {this.props.gig.comments.length}</p>
                     </div>
                     <div>
-                        <button onClick={this.viewCommentToggle}>Comments</button>
+                        <Button onClick={this.viewCommentToggle}>Show Comments</Button>
                     </div>
                 </footer>
                 <div>

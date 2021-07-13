@@ -3,6 +3,8 @@ import PeopleTable from "./PeopleTable";
 import styled from 'styled-components'
 import background from '../../assets/people-background.jpg'
 import ThisIndex from "./ThisIndex";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
 
 const FullPage = styled.div`
     height: 100%;
@@ -10,18 +12,39 @@ const FullPage = styled.div`
     background-image: url(${background});
     background-position: center;
     background-size: cover;
-    padding-bottom: 5%
+    padding: 2.5% 0
 
 `
 const PeopleView = styled.div`
     height: 80vh;
     overflow: auto;
     width: 82vw;
-    margin: auto
+    margin: 30px auto 0
 `
 const H = styled.h1`
     color: #FF9F1C;
-    padding: 30px 0
+`
+const Button = styled.button`
+    background-color: #FF9f1c;
+    color: white;
+    font-size: 20px;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    border: none;
+    transition: .25s ease-out;
+    &:hover{
+        transform: scale(1.1);
+        transition: .25s ease;
+    }   
+`
+
+const ButtonDiv = styled.div`
+    width: 44%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 0 0 0 10%
 `
 
 type AcceptedProps={
@@ -121,17 +144,22 @@ export default class PeopleIndex extends React.Component<AcceptedProps, PeopleSt
     render() {
         return (
             <FullPage>
-                <H>People</H>
                 
                 {this.state.profileView ? 
                 <div>
-                    <button onClick={()=>{this.showProfile()}}>Go Back</button>
+                    <ButtonDiv>
+                    <Button onClick={()=>{this.showProfile()}}><FontAwesomeIcon icon={faArrowLeft}/></Button>
+                <H>People</H>
+                    </ButtonDiv>
                 <ThisIndex showProfile={this.showProfile}userId={this.state.userId} fetchPeople={this.fetchPeople}/> 
                 </div>
                 :
+                <div>
+                    <H>People</H>
                 <PeopleView>
                     <PeopleTable userData={this.state.userData} showProfile={this.showProfile} setUserId={this.setUserId}/>
                 </PeopleView>
+                </div>
                 }
             </FullPage>
         )

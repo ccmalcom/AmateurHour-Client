@@ -56,10 +56,10 @@ const Button = styled.button`
     border: none;
     border-radius: 50%;
     background-color: #FF9f1c;
-    transition: .5s ease-out;
+    transition: .25s ease-out;
     &:hover{
-        transform: scale(1.25);
-        transition: .5s ease
+        transform: scale(1.1);
+        transition: .25s ease
     }
 `
 

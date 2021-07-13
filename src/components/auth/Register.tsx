@@ -18,7 +18,9 @@ const FormContainer = styled.form`
 `
 
 const RegisterDiv = styled.div`
-    height: 100%
+    height: 100%;
+    color: #891A1C;
+    font-weight: bold
 `
 const LoaderDiv = styled.div`
     display: flex;
@@ -26,6 +28,38 @@ const LoaderDiv = styled.div`
     align-items: center;
     height: 100%
 `
+const Button = styled.button`
+    width: 50%;
+    padding: 10px 0;
+    margin: 0 auto;
+    background-color: #FF9F1C;
+    color: white;
+    font-weight: bold;
+    border: none;
+    border-radius: 20px
+    `
+    const Button2 = styled.button`
+    width: 50%;
+    padding: 10px 0;
+    margin: 0 auto 30px;
+    background-color: #891A1C;
+    color: white;
+    font-weight: bold;
+    border: none;
+    border-radius: 20px
+    `
+    const TryIt = styled.button`
+    width: 75px;
+    height: 75px;
+    margin: 0 auto;
+    background-color: #891A1C;
+    color: white;
+    font-weight: bold;
+    border: none;
+    border-radius: 50%
+
+`
+
 type AcceptedProps={
     updateToken: (newToken: string, newUserId: number, newRole: string) => void,
     changeView: () => void,
@@ -110,12 +144,18 @@ export default class Register extends React.Component<AcceptedProps, RegisterSta
             <RegisterDiv className='register'>
             <FormContainer onSubmit={this.handleSubmit}>
                 <FlexDiv>
+                    <div>
                     <Label htmlFor="firstName">First Name</Label>
                     <Input name='firstName' placeholder='John' value={this.state.firstName} required onChange={(e) => this.setState({firstName: e.target.value})} />
+                    </div>
+                    <div>
                     <Label htmlFor="lastName">Last Name</Label>
                     <Input name='lastName' placeholder='Doe' value={this.state.lastName} required onChange={(e) => this.setState({lastName: e.target.value})} />
+                    </div>
+                    <div>
                     <Label htmlFor="zipCode">Zipcode</Label>
                     <Input name='zipCode' type='text' value={this.state.zipcode} placeholder='90210' required onChange={(e) => this.setState({zipcode: Number(e.target.value)})} />
+                    </div>
                 </FlexDiv>
                 <FormGroup>
                     <Label htmlFor="email">Email</Label>
@@ -139,13 +179,12 @@ export default class Register extends React.Component<AcceptedProps, RegisterSta
                     <Label htmlFor="genre">Genre(s)</Label>
                     <Input name='genre' value={this.state.genre} placeholder='Rock, Jazz' onChange={(e) => this.setState({genre: Array(e.target.value)})} />
                 </FormGroup>
-                <button type='submit'>Get Started</button>
-                <br />
+                <Button type='submit'>Get Started</Button>
             </FormContainer>
                 <p>Already have an account?</p>
-                <button onClick={this.props.changeView}>Login</button>
+                <Button2 onClick={this.props.changeView}>Login</Button2>
                 <p>Not ready to sign up? Click below for a sample view</p>
-                                <button onClick={()=>{this.props.handleTryIt(); this.isLoading()}}>Try it</button>
+                                <TryIt onClick={()=>{this.props.handleTryIt(); this.isLoading()}}>Try it</TryIt>
             </RegisterDiv>
             }
             </>
