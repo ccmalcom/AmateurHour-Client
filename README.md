@@ -30,3 +30,5 @@ I'm so glad you asked! The data pulls from a server deployed via heroku. You can
 ## What's next?
 
 Of course, a project is never actually complete. In future versions, I would like to add the ability to send messages to other users, add friends, upload profile pictures, and change profile styles. 
+
+Another highly important addition is to make the site mobile friendly.

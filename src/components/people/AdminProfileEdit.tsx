@@ -29,6 +29,7 @@ type AcceptedProps = {
         bio: string,
         socialLinks: Array<string>,
         createdAt: string,
+        admin: string
         gigs: [
             {
                 id: number,
@@ -135,10 +136,17 @@ export default class AdminProfileEdit extends React.Component<AcceptedProps, Edi
                                 <Label>Social Links</Label>
                                 <Input type='text' value={this.state.socialLinks} placeholder='https://twitter.com/johndoe' onChange={(e) => this.setState({ socialLinks: Array(e.target.value) })} />
                             </FormGroup>
+                                {this.props.userData.admin === 'User' ?
                             <FormGroup>
                                 <Label>Make Admin?</Label>
-                                <Input type='checkbox'  onClick={() => this.setState({ role: 'Admin' })} />
+                                <Input type='checkbox'  onClick={() => this.setState({ role: 'Admin' })} /> 
                             </FormGroup>
+                                : 
+                            <FormGroup>
+                                <Label>Remove Admin?</Label>
+                                <Input type='checkbox'  onClick={() => this.setState({ role: 'User' })} /> 
+                            </FormGroup>
+                            }
 
                             <Button type='submit'>Update</Button>
                         </Form>

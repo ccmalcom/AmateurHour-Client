@@ -48,7 +48,8 @@ type IndexState = {
                 content: string,
                 createdAt: string
             }
-        ]
+        ],
+        admin: string
     },
     editModalActive: boolean,
     deleteModalActive: boolean,
@@ -81,7 +82,8 @@ export default class ThisIndex extends React.Component<AcceptedProps, IndexState
                         content: "",
                         createdAt: "",
                     }
-                ]
+                ],
+                admin: ''
             },
             editModalActive: false,
             deleteModalActive: false,
@@ -142,7 +144,8 @@ export default class ThisIndex extends React.Component<AcceptedProps, IndexState
                     content: "",
                     createdAt: "",
                 }
-            ]
+            ],
+            admin: ''
         }
     })
 }
