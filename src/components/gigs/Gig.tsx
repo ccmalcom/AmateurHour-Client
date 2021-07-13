@@ -138,7 +138,7 @@ export default class Gig extends React.Component<AcceptedProps, GigState>{
     render(){
         return (
             <ThisGig key={this.props.index}>
-                {localStorage.role !== 'Test' ?
+                { localStorage.userId == this.props.gig.userId || localStorage.role === 'Admin' ?
                 <DropdownDiv>
                     <UncontrolledDropdown>
                         <DropdownToggle caret>
@@ -146,8 +146,8 @@ export default class Gig extends React.Component<AcceptedProps, GigState>{
                         </DropdownToggle>
                         <DropdownMenu>
                             <DropdownItem header>Options</DropdownItem>
-                            {localStorage.userId == this.props.gig.userId ? <DropdownItem onClick={() => { this.props.gigToEdit(this.props.gig); this.props.editModal() }}>Edit Gig</DropdownItem> : null}
-                            {localStorage.userId == this.props.gig.userId ? <DropdownItem onClick={() => { this.deleteGig(this.props.gig.id) }}>Delete Gig</DropdownItem> : null}
+                            {localStorage.userId == this.props.gig.userId && localStorage.role === 'User' ? <DropdownItem onClick={() => { this.props.gigToEdit(this.props.gig); this.props.editModal() }}>Edit Gig</DropdownItem> : null}
+                            {localStorage.userId == this.props.gig.userId && localStorage.role === 'User' ? <DropdownItem onClick={() => { this.deleteGig(this.props.gig.id) }}>Delete Gig</DropdownItem> : null}
 
                             {/* ADMIN */}
                             {localStorage.role === 'Admin' ? <DropdownItem onClick={() => { this.props.gigToEdit(this.props.gig); this.props.editModal() }}>Edit Gig</DropdownItem> : null}

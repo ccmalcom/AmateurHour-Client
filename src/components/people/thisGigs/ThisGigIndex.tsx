@@ -3,6 +3,7 @@ import 'react-loader-spinner/dist/loader/css/react-spinner-loader.css'
 import Loader from 'react-loader-spinner';
 import styled from 'styled-components';
 import ThisGigTable from './ThisGigTable';
+import AdminGigEdit from '../../gigs/AdminGigEdit';
 
 const GigsView = styled.div`
     height: 66.5vh;
@@ -108,8 +109,28 @@ export default class ThisGigIndex extends React.Component<AcceptedProps, GigStat
             editModalActive: false
         }
         this.gigFetch = this.gigFetch.bind(this)
+        this.gigToEdit = this.gigToEdit.bind(this)
+        this.editModal = this.editModal.bind(this)
     }
-
+    gigToEdit(gig: {
+        id: number;
+        location: string;
+        title: string;
+        instrument: Array<string>;
+        genre: Array<string>;
+        size: number;
+        content: string;
+        createdAt: string;
+        updatedAt: string;
+        userId: number;
+        posterName: string
+    }) {
+        this.setState(() => { return { gigToEdit: gig } })
+        console.log(this.state.gigToEdit);
+    }
+    editModal() {
+        this.setState((state) => { return { editModalActive: !state.editModalActive } })
+    }
     componentDidMount(){
         // console.log();
         this.gigFetch()
@@ -143,10 +164,10 @@ export default class ThisGigIndex extends React.Component<AcceptedProps, GigStat
                     <p>Loading...</p>
                 </div>
                 :
-                    <ThisGigTable userGigs={this.state.userGigs} gigFetch={this.gigFetch} />
+                    <ThisGigTable userGigs={this.state.userGigs} gigFetch={this.gigFetch} gigToEdit={this.gigToEdit} editModal={this.editModal}/>
                 }
                 </GigsView> 
-
+                {this.state.editModalActive && localStorage.role === 'Admin' ? <AdminGigEdit editModal={this.editModal} gigToEdit={this.state.gigToEdit} gigFetch={this.gigFetch} /> : null}
             </div>
         )
     }

@@ -7,21 +7,23 @@ import styled from 'styled-components';
 import background from '../../assets/gigs.jpg';
 import GigEdit from './GigEdit';
 import AdminGigEdit from './AdminGigEdit';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faPlus } from '@fortawesome/free-solid-svg-icons';
 
 const GigsView = styled.div`
     height: 75vh;
     overflow: auto;
-    width: 50vw;
+    width: 70vw;
 `
 const ButtonDiv = styled.div`
     width: 70vw;
     margin: auto;
     margin-bottom: 20px;
     display: flex;
-    justify-content: flex-end
+    justify-content: center
 `
 const FullPage = styled.div`
-    height: calc(100vh - 60px);
+    height: 105vh;
     width: 100vw;
     background-image: url(${background});
     background-position: center;
@@ -42,6 +44,23 @@ const FilterBox = styled.div`
     background-color: white;
     height: 75vh;
     width: 30%
+`
+
+const Button = styled.button`
+    font-size: 32px;
+    height: 60px;
+    width: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: none;
+    border-radius: 50%;
+    background-color: #FF9f1c;
+    transition: .5s ease-out;
+    &:hover{
+        transform: scale(1.25);
+        transition: .5s ease
+    }
 `
 
 type AcceptedProps = {
@@ -200,14 +219,11 @@ export default class GigIndex extends React.Component<AcceptedProps, GigState>{
                 <H>Gigs</H>
                 {localStorage.role !== 'Test' ?
                     <ButtonDiv>
-                        <button onClick={this.modalPopup}>+</button>
+                        <Button onClick={this.modalPopup}><FontAwesomeIcon icon={faPlus} /></Button>
                     </ButtonDiv>
                     : null}
                 {this.state.createModalActive ? <PostGig gigFetch={this.gigFetch} modalPopup={this.modalPopup} /> : null}
                 <ContentDiv>
-                    <FilterBox>
-                        <p>Filter gigs here, eventually, if I figure that out</p>
-                    </FilterBox>
                     {this.state.loading ?
                         <div>
                             <Loader type='Audio' color='#FF9F1C' />

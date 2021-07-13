@@ -24,6 +24,8 @@ const H = styled.h1`
     padding: 30px 0
 `
 
+type AcceptedProps={
+}
 
 type PeopleState = {
     userData: [{
@@ -55,8 +57,8 @@ type PeopleState = {
     profileView: boolean
 }
 
-export default class PeopleIndex extends React.Component<{}, PeopleState>{
-    constructor(props: {}) {
+export default class PeopleIndex extends React.Component<AcceptedProps, PeopleState>{
+    constructor(props: AcceptedProps) {
         super(props)
         this.state = {
             userData: [{
@@ -124,7 +126,7 @@ export default class PeopleIndex extends React.Component<{}, PeopleState>{
                 {this.state.profileView ? 
                 <div>
                     <button onClick={()=>{this.showProfile()}}>Go Back</button>
-                <ThisIndex userId={this.state.userId}/> 
+                <ThisIndex showProfile={this.showProfile}userId={this.state.userId} fetchPeople={this.fetchPeople}/> 
                 </div>
                 :
                 <PeopleView>

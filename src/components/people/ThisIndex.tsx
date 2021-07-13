@@ -2,6 +2,8 @@ import React from "react";
 import styled from "styled-components";
 import ThisProfile from "./ThisProfile";
 import ThisGigIndex from "./thisGigs/ThisGigIndex";
+import AdminProfileEdit from "./AdminProfileEdit";
+import AdminDeleteUser from "./AdminDeleteUser";
 
 const FullPage = styled.div`
     height: 80vh;
@@ -18,7 +20,9 @@ const PostsBox = styled.div`
     background-color: #FDFFFC
 `
 type AcceptedProps = {
-    userId: number
+    userId: number,
+    showProfile: ()=> void,
+    fetchPeople: ()=>void
 }
 
 type IndexState = {
@@ -83,7 +87,9 @@ export default class ThisIndex extends React.Component<AcceptedProps, IndexState
             editModalActive: false,
             deleteModalActive: false,
         }
+        this.editModal = this.editModal.bind(this)
         this.getUserInfo = this.getUserInfo.bind(this)
+        this.deleteModal = this.deleteModal.bind(this)
     }
     componentDidMount() {
         this.getUserInfo()
@@ -103,6 +109,14 @@ export default class ThisIndex extends React.Component<AcceptedProps, IndexState
             .then(userData =>  this.setState({ userData: userData }))
             .then(()=>{console.log(this.state.userData)})
             .catch(err => console.log(err))
+    }
+
+    editModal(){
+        this.setState((state)=>{return{editModalActive: !state.editModalActive}})
+    }
+
+    deleteModal(){
+        this.setState((state) =>{return{deleteModalActive: !state.deleteModalActive}})
     }
 
     componentWillUnmount(){
@@ -136,10 +150,16 @@ export default class ThisIndex extends React.Component<AcceptedProps, IndexState
     render() {
         return (
             <FullPage id='ProfileAndGigs'>
-                <ThisProfile userData={this.state.userData} />
+                <ThisProfile userData={this.state.userData} editModal={this.editModal} deleteModal={this.deleteModal} />
                 <PostsBox id='GigsDiv'>
                     <ThisGigIndex userId={this.props.userId}/>
                 </PostsBox>
+                {this.state.editModalActive ? 
+                <AdminProfileEdit userData={this.state.userData} editModal={this.editModal} userFetch={this.getUserInfo}/>
+                : null }
+                {this.state.deleteModalActive ? 
+                <AdminDeleteUser showProfile={this.props.showProfile} deleteModal={this.deleteModal}  userId={this.state.userData.id} fetchPeople={this.props.fetchPeople}/>
+                : null}
             </FullPage>
         )
     }

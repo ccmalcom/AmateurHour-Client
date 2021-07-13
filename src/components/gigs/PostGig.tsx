@@ -90,7 +90,7 @@ export default class PostGig extends React.Component<AcceptedProps, PostState>{
                 </FormGroup>               
                 <FormGroup>
                     <Label>Details</Label>
-                    <textarea name="details" id="details" onChange={(e) =>this.setState({content: e.target.value})}/>
+                    <textarea name="details" id="details" required onChange={(e) =>this.setState({content: e.target.value})}/>
                 </FormGroup>
                 <Button type='submit'>Post gig!</Button>
             </Form>

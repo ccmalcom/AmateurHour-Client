@@ -36,7 +36,7 @@ type RegisterState={
     firstName: string,
     lastName: string,
     email: string,
-    zipcode: number, //!should be num
+    zipcode: number | undefined, 
     password: string,
     instrumentString: string,
     instrument: Array<string>, //!should be array of strings
@@ -52,7 +52,7 @@ export default class Register extends React.Component<AcceptedProps, RegisterSta
         this.state={
             firstName: '',
             lastName: '',
-            zipcode: 12345, //!should be num
+            zipcode: undefined, //!should be num
             email: '',
             password: '',
             instrumentString: '',
@@ -111,15 +111,15 @@ export default class Register extends React.Component<AcceptedProps, RegisterSta
             <FormContainer onSubmit={this.handleSubmit}>
                 <FlexDiv>
                     <Label htmlFor="firstName">First Name</Label>
-                    <Input name='firstName' value={this.state.firstName} required onChange={(e) => this.setState({firstName: e.target.value})} />
+                    <Input name='firstName' placeholder='John' value={this.state.firstName} required onChange={(e) => this.setState({firstName: e.target.value})} />
                     <Label htmlFor="lastName">Last Name</Label>
-                    <Input name='lastName' value={this.state.lastName} required onChange={(e) => this.setState({lastName: e.target.value})} />
+                    <Input name='lastName' placeholder='Doe' value={this.state.lastName} required onChange={(e) => this.setState({lastName: e.target.value})} />
                     <Label htmlFor="zipCode">Zipcode</Label>
-                    <Input name='zipCode' type='number' value={this.state.zipcode} required onChange={(e) => this.setState({zipcode: Number(e.target.value)})} />
+                    <Input name='zipCode' type='text' value={this.state.zipcode} placeholder='90210' required onChange={(e) => this.setState({zipcode: Number(e.target.value)})} />
                 </FlexDiv>
                 <FormGroup>
                     <Label htmlFor="email">Email</Label>
-                    <Input name='email' type='email' value={this.state.email} required onChange={(e) => this.setState({email: e.target.value})} />
+                    <Input name='email' type='email' value={this.state.email} required placeholder='someone@email.com' onChange={(e) => this.setState({email: e.target.value})} />
                 </FormGroup>
                 <FormGroup>
                     <Label htmlFor="password">Password</Label>
@@ -133,11 +133,11 @@ export default class Register extends React.Component<AcceptedProps, RegisterSta
                 </FormGroup>
                 <FormGroup>
                     <Label htmlFor="instrument">Instrument(s)</Label>
-                    <Input name='instrument' value={this.state.instrument} placeholder='Trumpet, Guitar'required onChange={(e) => this.setState({instrument: Array(e.target.value)})} />
+                    <Input name='instrument' value={this.state.instrument} placeholder='Trumpet, Guitar' onChange={(e) => this.setState({instrument: Array(e.target.value)})} />
                 </FormGroup>
                 <FormGroup>
                     <Label htmlFor="genre">Genre(s)</Label>
-                    <Input name='genre' value={this.state.genre} required onChange={(e) => this.setState({genre: Array(e.target.value)})} />
+                    <Input name='genre' value={this.state.genre} placeholder='Rock, Jazz' onChange={(e) => this.setState({genre: Array(e.target.value)})} />
                 </FormGroup>
                 <button type='submit'>Get Started</button>
                 <br />

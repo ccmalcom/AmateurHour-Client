@@ -35,9 +35,20 @@ const CommentTable=(props: AcceptedProps)=>{
         .then(res=>console.log(res))
         .then(()=>{props.gigFetch()})
     }
+    const deleteCommentAdmin = (commentId: number) =>{
+        fetch(`https://ccm-amateurhour.herokuapp.com/comment/delete/${commentId}/admin`,{
+            method: 'DELETE',
+            headers: new Headers({
+                'Content-Type': 'application/json',
+                'Authorization': localStorage.token
+            })
+        })
+        .then(res=>console.log(res))
+        .then(()=>{props.gigFetch()})
+    }
     const commentMapper = () =>{
         return props.comments.map((comment, index) => {
-            return <Comment gigId={props.gigId} comment={comment} deleteComment={deleteComment} gigFetch={props.gigFetch}/>
+            return <Comment gigId={props.gigId} comment={comment} deleteComment={deleteComment} gigFetch={props.gigFetch} deleteCommentAdmin={deleteCommentAdmin}/>
         })
     }
     

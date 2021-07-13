@@ -22,6 +22,7 @@ type AcceptedProps = {
 
     },
     deleteComment: (commentId: number) => void,
+    deleteCommentAdmin: (commentId: number) => void,
     gigFetch: () => void,
     gigId: number
 }
@@ -48,16 +49,23 @@ export default class Comment extends React.Component<AcceptedProps, CommentState
                 <hr />
                 {localStorage.role !== 'Test' ?
                     <div>
-                        {localStorage.userId == this.props.comment.userId || localStorage.userId == this.props.gigId ? <DropdownDiv>
+                        {localStorage.userId == this.props.comment.userId || localStorage.userId == this.props.gigId || localStorage.role === 'Admin' ? <DropdownDiv>
                             <UncontrolledDropdown>
                                 <DropdownToggle caret>
                                     <FontAwesomeIcon icon={faEllipsisH} />
                                 </DropdownToggle>
+                                {localStorage.role === 'User' ?<DropdownMenu>
+                                    <DropdownItem header>Options</DropdownItem>
+                                    {localStorage.userId == this.props.comment.userId ? 
+                                    <DropdownItem onClick={() => { this.editDisplay() }} >Edit</DropdownItem>
+                                    : null }
+                                    <DropdownItem onClick={() => { this.props.deleteComment(this.props.comment.id) }} >Delete </DropdownItem>
+                                </DropdownMenu> : null}
+                                {localStorage.role === 'Admin'?
                                 <DropdownMenu>
                                     <DropdownItem header>Options</DropdownItem>
-                                    <DropdownItem onClick={() => { this.editDisplay() }} >Edit</DropdownItem>
-                                    <DropdownItem onClick={() => { this.props.deleteComment(this.props.comment.id) }} >Delete </DropdownItem>
-                                </DropdownMenu>
+                                    <DropdownItem onClick={() => { this.props.deleteCommentAdmin(this.props.comment.id) }} >Delete </DropdownItem>
+                                </DropdownMenu> : null}
                             </UncontrolledDropdown>
                         </DropdownDiv> : null}
                     </div>

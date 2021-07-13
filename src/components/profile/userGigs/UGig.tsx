@@ -3,8 +3,7 @@ import styled from 'styled-components';
 import { UncontrolledDropdown, DropdownToggle, DropdownMenu, DropdownItem } from "reactstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEllipsisH } from "@fortawesome/free-solid-svg-icons";
-import UPostComment from "./comments/UPostComment";
-import UCommentTable from "./comments/UCommentTable";
+import CommentTable from "../../comments/CommentTable";
 
 const ThisGig = styled.div`
     border: 1px solid black;
@@ -22,6 +21,30 @@ height: fit-content;
 const DropdownDiv = styled.div`
     display: flex;
     justify-content: flex-end
+`
+const Constraints = styled.div`
+    display: flex;
+    width: 100%;
+    justify-content: space-evenly
+`
+
+const FlexDiv = styled.div`
+    display: flex;
+    width: 100%;
+    margin: auto;
+    justify-content: space-evenly;
+    padding-left: 50px
+`
+const Details = styled.div`
+    background-color: #C4C4C4;
+    display: flex;
+    align-items: center;
+    height: fit-content;
+    justify-content: center;
+    padding: 20px
+`
+const NoMarginText = styled.p`
+    margin: 0
 `
 
 type AcceptedProps = {
@@ -90,25 +113,20 @@ export default class Gig extends React.Component<AcceptedProps, GigState>{
             .then(res => console.log(res))
             .then(() => this.props.gigFetch())
     }
-    adminDeleteGig = (gig: number) => {
-        fetch(`https://ccm-amateurhour.herokuapp.com/gig/delete/${gig}/admin`, {
-            method: 'DELETE',
-            headers: new Headers({
-                'Content-Type': 'application/json',
-                'Authorization': localStorage.token
-            })
-        })
-            .then(res => console.log(res))
-            .then(() => this.props.gigFetch())
-    }
 
     viewCommentToggle() {
         this.setState((state) => { return { viewComment: !state.viewComment } })
     }
+
+    dateConvert(timestamp: string){
+        const d = new Date( timestamp );
+        let date = d.toDateString() + ', ' + d.getHours() + ":" + d.getMinutes() ;
+        return date ;
+    }
     render() {
         return (
             <ThisGig key={this.props.index}>
-                {localStorage.role !== 'Test' ?
+                    { localStorage.role !== 'Test' ?
                 <DropdownDiv>
                     <UncontrolledDropdown>
                         <DropdownToggle caret>
@@ -116,28 +134,29 @@ export default class Gig extends React.Component<AcceptedProps, GigState>{
                         </DropdownToggle>
                         <DropdownMenu>
                             <DropdownItem header>Options</DropdownItem>
-                            {localStorage.userId == this.props.gig.userId ? <DropdownItem onClick={() => { this.props.gigToEdit(this.props.gig); this.props.editModal() }}>Edit Gig</DropdownItem> : null}
-                            {localStorage.userId == this.props.gig.userId ? <DropdownItem onClick={() => { this.deleteGig(this.props.gig.id) }}>Delete Gig</DropdownItem> : null}
-                            {/* ADMIN */}
-                            {localStorage.role === 'Admin' ? <DropdownItem onClick={() => { this.adminDeleteGig(this.props.gig.id) }}>Delete Gig</DropdownItem> : null}
+                            <DropdownItem onClick={() => { this.props.gigToEdit(this.props.gig); this.props.editModal() }}>Edit Gig</DropdownItem>
+                            <DropdownItem onClick={() => { this.deleteGig(this.props.gig.id) }}>Delete Gig</DropdownItem>
                         </DropdownMenu>
                     </UncontrolledDropdown>
                 </DropdownDiv>
-                : null }
+                : null}
                 <PostData>
                     <div>
-                        <h3>{this.props.gig.posterName}</h3>
-                        <h3>{this.props.gig.title}</h3>
-                        <h5>{this.props.gig.location}</h5>
+                        <h2>{this.props.gig.title}</h2>
+                        <FlexDiv>
+                        <p>{this.props.gig.posterName}</p>
+                        <p><strong>{this.props.gig.location}</strong></p>
+                        <p>{this.dateConvert(this.props.gig.createdAt)}</p>
+                        </FlexDiv>
                     </div>
-                    <div>
-                        <h5>{this.props.gig.size}</h5>
-                        <h5>{this.props.gig.instrument}</h5>
-                        <h5>{this.props.gig.genre}</h5>
-                    </div>
-                    <div>
-                        <p>{this.props.gig.content}</p>
-                    </div>
+                    <Constraints>
+                        <p><strong>Number of players:</strong> {this.props.gig.size}</p>
+                        <p><strong>Instrument(s): </strong>{this.props.gig.instrument}</p>
+                        <p><strong>Genre(s): </strong>{this.props.gig.genre}</p>
+                    </Constraints>
+                    <Details>
+                        <NoMarginText>{this.props.gig.content}</NoMarginText>
+                    </Details>
                 </PostData>
                 <footer>
                     <div>
@@ -151,7 +170,7 @@ export default class Gig extends React.Component<AcceptedProps, GigState>{
                 <div>
                     {this.state.viewComment ?
                         <div>
-                            <UCommentTable gigFetch={this.props.gigFetch} comments={this.props.gig.comments} gigId={this.props.gig.id} />
+                            <CommentTable gigFetch={this.props.gigFetch} comments={this.props.gig.comments} gigId={this.props.gig.id} />
                         </div> : null}
 
                 </div>

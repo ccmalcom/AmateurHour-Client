@@ -44,6 +44,8 @@ type AcceptedProps={
             }
         ]
     },
+    editModal: ()=>void,
+    deleteModal: ()=>void
 }
 
 type ProfileState={
@@ -114,6 +116,12 @@ export default class ThisProfile extends React.Component<AcceptedProps, ProfileS
                 <p><strong>Social Links:</strong></p>
                 {this.props.userData.socialLinks !== null?
                 <div>{this.linkMapper()}</div>    
+                : null}
+                {localStorage.role === 'Admin' ?  
+                <button onClick={this.props.editModal}>Edit Profile</button>
+                : null}
+                {localStorage.role === 'Admin' ?  
+                <button onClick={this.props.deleteModal}>Delete Profile</button>
                 : null}
             </ProfileBox>
 
