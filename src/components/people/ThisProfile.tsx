@@ -22,14 +22,16 @@ const Button1 = styled.div`
     padding: 10px 20px;
     border-radius: 30px;
     border: none;
-    color: white
+    color: white;
+    cursor: pointer
 `
 const Button2 = styled.div`
     background-color: #891A1C;
     padding: 10px 20px;
     border-radius: 30px;
     border: none;
-    color: white
+    color: white;
+    cursor: pointer
 `
 const ButtonDiv = styled.div`
     display: flex;
@@ -92,6 +94,9 @@ export default class ThisProfile extends React.Component<AcceptedProps, ProfileS
             },
             dataFetched: false,
         }
+        this.zipToLocation = this.zipToLocation.bind(this)
+        this.instrumentMap = this.instrumentMap.bind(this)
+        this.genreMap = this.genreMap.bind(this)
     }
     componentDidUpdate(){
         if(this.state.dataFetched === false){
@@ -115,7 +120,24 @@ export default class ThisProfile extends React.Component<AcceptedProps, ProfileS
         )
     })
 }
-
+instrumentMap(){
+    if(this.props.userData.instrument !== null){
+        return this.props.userData.instrument.map((i)=>{
+            return i + ' '
+        })
+    } else {
+        return null
+    }
+}
+genreMap(){
+    if(this.props.userData.genre !== null){
+        return this.props.userData.genre.map((i)=>{
+            return i + ' '
+        })
+    } else {
+        return null
+    }
+}
     render(){
         return(
             <ProfileBox>
@@ -127,9 +149,9 @@ export default class ThisProfile extends React.Component<AcceptedProps, ProfileS
                 {/* <p>{this.props.userData.emailAddress}</p> */}
                 {/* <img src={gravatarUrl(`${this.props.userData.emailAddress}`, {size: 200, default: `${defaultPic}`})} alt="" /> */}
                 <p><strong>Instrument(s):</strong></p>
-                <p>{this.props.userData.instrument}</p>
+                <p>{this.instrumentMap()}</p>
                 <p><strong>Genre(s):</strong></p>
-                <p>{this.props.userData.genre}</p>
+                <p>{this.genreMap()}</p>
                 <p><strong>Bio:</strong></p>
                 <p>{this.props.userData.bio}</p>
                 <p><strong>Social Links:</strong></p>

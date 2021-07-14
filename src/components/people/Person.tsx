@@ -1,7 +1,8 @@
 import React from "react";
 import styled from 'styled-components';
 // import gravatarUrl from "gravatar-url";
-import defaultPic from '../../assets/default-profile.png'
+import defaultPic from '../../assets/default-profile.png';
+import LocData from "./LocData";
 
 
 
@@ -62,43 +63,41 @@ type AcceptedProps = {
 }
 
 type PersonState = {
-    locData: {
-        places: [
-            {
-                'place name': string
-                'state abbreviation': string
-            }
-        ]
-    },
     dataFetched: boolean
 }
 export default class Person extends React.Component<AcceptedProps, PersonState>{
     constructor(props: AcceptedProps) {
         super(props)
         this.state = {
-            locData: {
-                places: [
-                    {
-                        'place name': '',
-                        'state abbreviation': ''
-                    }
-                ]
-            },
             dataFetched: false,
         }
+        this.instrumentMap = this.instrumentMap.bind(this)
+        this.genreMap = this.genreMap.bind(this)
     }
 
-    componentDidUpdate() {
-        if (this.state.dataFetched === false) {
-            this.zipToLocation()
+    // componentDidUpdate() {
+    //     if (this.state.dataFetched === false) {
+    //         this.zipToLocation()
+    //     }
+    // }
+    
+    instrumentMap(){
+        if(this.props.user.instrument !== null){
+            return this.props.user.instrument.map((i)=>{
+                return i + ' '
+            })
+        } else {
+            return null
         }
     }
-    zipToLocation() {
-        this.setState({ dataFetched: true })
-        fetch(`https://api.zippopotam.us/us/${this.props.user.zipCode}`)
-            .then(res => res.json())
-            .then(data => this.setState({ locData: data }))
-            .then(() => { console.log(this.state.locData) })
+    genreMap(){
+        if(this.props.user.genre !== null){
+            return this.props.user.genre.map((i)=>{
+                return i + ' '
+            })
+        } else {
+            return null
+        }
     }
 
     render() {
@@ -110,16 +109,15 @@ export default class Person extends React.Component<AcceptedProps, PersonState>{
                 </div>
                 <div>
                     <p><strong>Location:</strong></p>
-                    <p>{this.state.locData.places[0]["place name"]},{this.state.locData.places[0]["state abbreviation"]}</p>
-                    {/* <p><strong>Email:</strong></p>
-                    <p>{this.props.user.emailAddress}</p> */}
+                    <LocData zip={this.props.user.zipCode}/>       
+                    <p><strong>Gigs Posted:</strong></p>
+                    <p>{this.props.user.gigs.length}</p>
                 </div>
-                {/* <img src={gravatarUrl(`${this.props.user.emailAddress}`, {size: 200, default: `${defaultPic}`})} alt="" /> */}
                 <div>
                     <p><strong>Instrument(s):</strong></p>
-                    <p>{this.props.user.instrument}</p>
+                    <p>{this.instrumentMap()}</p>
                     <p><strong>Genre(s):</strong></p>
-                    <p>{this.props.user.genre}</p>
+                    <p>{this.genreMap()}</p>
                 </div>
                 <Button onClick={()=>{this.props.showProfile();
                 this.props.setUserId(this.props.user.id)}}>View Profile</Button>
