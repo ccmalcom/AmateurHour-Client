@@ -1,8 +1,42 @@
 import React, { FormEvent } from "react";
-import { Button, Form, FormGroup, Label, Input, Modal, ModalHeader, ModalBody, ModalFooter, } from "reactstrap";
+import { Form, Label, Input, Modal, ModalHeader, ModalBody, } from "reactstrap";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowAltCircleLeft } from '@fortawesome/free-solid-svg-icons';
+import styled from 'styled-components';
 
+const FlexDiv = styled.div`
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    margin: auto
+`
+const Item = styled.div`
+    width: 100%
+`
+const TextArea = styled.textarea`
+    width: 100%
+`
+const Button = styled.button`
+    background-color: #FF9f1c;
+    padding: 10px 20px;
+    width: 100%;
+    border-radius: 30px;
+    border: none;
+    margin: 10px;
+    color: white
+`
+
+const BackButton = styled.button`
+    border: none;
+    color: #891A1C
+`
+const HeaderDiv = styled.div`
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 250%;
+`
 type PostState={
     title: string,
     location: string,
@@ -63,36 +97,41 @@ export default class PostGig extends React.Component<AcceptedProps, PostState>{
             centered
             >
                 <ModalHeader>
-                <button onClick={this.props.modalPopup}><FontAwesomeIcon icon={faArrowAltCircleLeft} size="3x"/></button>
-                <h3>Details</h3>
+                    <HeaderDiv>
+                <BackButton onClick={this.props.modalPopup}><FontAwesomeIcon icon={faArrowAltCircleLeft} size="3x"/></BackButton>
+                <h3>New Gig</h3>
+                    </HeaderDiv>
                 </ModalHeader>
             <ModalBody>
             <Form onSubmit={this.postGig}>
-                <FormGroup>
+                <FlexDiv>
+
+                <Item>
                     <Label>Title</Label>
                     <Input type='text' value={this.state.title} placeholder="let's make a ska band" onChange={(e) => this.setState({title: e.target.value})}/>
-                </FormGroup>
-                <FormGroup>
+                </Item>
+                <Item>
                     <Label>Location</Label>
                     <Input type='text' value={this.state.location} placeholder='Indianapolis, IN' onChange={(e) => this.setState({location: e.target.value})} />
-                </FormGroup>               
-                <FormGroup>
+                </Item>               
+                <Item>
                     <Label>Size</Label>
                     <Input type='number' value={this.state.size} placeholder='3' min='1' onChange={(e) => this.setState({size: Number(e.target.value)})} />
-                </FormGroup>               
-                <FormGroup>
+                </Item>               
+                <Item>
                     <Label>Instruments</Label>
                     <Input type='text' value={this.state.instruments} placeholder='Trumpet, Tuba' onChange={(e) => this.setState({instruments: Array(e.target.value)})} />
-                </FormGroup>               
-                <FormGroup>
+                </Item>               
+                <Item>
                     <Label>Genre</Label>
                     <Input type='text' value={this.state.genre} placeholder='Classical, Jazz, Rock' onChange={(e) => this.setState({genre: Array(e.target.value)})} />
-                </FormGroup>               
-                <FormGroup>
+                </Item>               
+                <Item>
                     <Label>Details</Label>
-                    <textarea name="details" id="details" required onChange={(e) =>this.setState({content: e.target.value})}/>
-                </FormGroup>
+                    <TextArea name="details" id="details" required onChange={(e) =>this.setState({content: e.target.value})}/>
+                </Item>
                 <Button type='submit'>Post gig!</Button>
+                </FlexDiv>
             </Form>
             </ModalBody>
             </Modal>

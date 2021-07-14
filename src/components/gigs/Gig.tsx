@@ -114,6 +114,8 @@ export default class Gig extends React.Component<AcceptedProps, GigState>{
             viewComment: false,
         }
         this.viewCommentToggle = this.viewCommentToggle.bind(this)
+        this.instrumentMap = this.instrumentMap.bind(this)
+        this.genreMap = this.genreMap.bind(this)
     }
 
     deleteGig = (gig: number) => {
@@ -148,6 +150,25 @@ export default class Gig extends React.Component<AcceptedProps, GigState>{
         let date = d.toDateString() + ', ' + d.getHours() + ":" + d.getMinutes() ;
         return date ;
     }
+
+    instrumentMap(){
+        if(this.props.gig.instrument !== null){
+            return this.props.gig.instrument.map((i)=>{
+                return i + ' '
+            })
+        } else {
+            return null
+        }
+    }
+    genreMap(){
+        if(this.props.gig.genre !== null){
+            return this.props.gig.genre.map((i)=>{
+                return i + ' '
+            })
+        } else {
+            return null
+        }
+    }
     render(){
         return (
             <ThisGig key={this.props.index}>
@@ -181,8 +202,8 @@ export default class Gig extends React.Component<AcceptedProps, GigState>{
                     </div>
                     <Constraints>
                         <p><strong>Number of players:</strong> {this.props.gig.size}</p>
-                        <p><strong>Instrument(s): </strong>{this.props.gig.instrument}</p>
-                        <p><strong>Genre(s): </strong>{this.props.gig.genre}</p>
+                        <p><strong>Instrument(s): </strong>{this.instrumentMap()}</p>
+                        <p><strong>Genre(s): </strong>{this.genreMap()}</p>
                     </Constraints>
                     <Details>
                         <NoMarginText>{this.props.gig.content}</NoMarginText>

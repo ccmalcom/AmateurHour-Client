@@ -1,7 +1,42 @@
 import React, { FormEvent } from 'react';
-import { Button, Form, FormGroup, Label, Input, Modal, ModalHeader, ModalBody, } from "reactstrap";
+import { Form, FormGroup, Label, Input, Modal, ModalHeader, ModalBody, } from "reactstrap";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowAltCircleLeft } from '@fortawesome/free-solid-svg-icons';
+import styled from 'styled-components';
+
+const FlexDiv = styled.div`
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    margin: auto
+`
+const Item = styled.div`
+    width: 100%
+`
+const TextArea = styled.textarea`
+    width: 100%
+`
+const Button = styled.button`
+    background-color: #FF9f1c;
+    padding: 10px 20px;
+    width: 100%;
+    border-radius: 30px;
+    border: none;
+    margin: 10px;
+    color: white
+`
+
+const BackButton = styled.button`
+    border: none;
+    color: #891A1C
+`
+const HeaderDiv = styled.div`
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 220%;
+`
 
 type EditState = {
     firstName: string,
@@ -99,56 +134,61 @@ export default class AdminProfileEdit extends React.Component<AcceptedProps, Edi
                     centered
                 >
                     <ModalHeader>
-                        <button onClick={this.props.editModal}><FontAwesomeIcon icon={faArrowAltCircleLeft} size="3x" /></button>
+                        <HeaderDiv>
+                        <BackButton onClick={this.props.editModal}><FontAwesomeIcon icon={faArrowAltCircleLeft} size="3x" /></BackButton>
                         <h3>Edit Profile</h3>
+                        </HeaderDiv>
                     </ModalHeader>
                     <ModalBody>
                         <Form onSubmit={this.profileUpdate}>
-                            <FormGroup>
+                            <FlexDiv>
+
+                            <Item>
                                 <Label>First Name</Label>
                                 <Input type='text' value={this.state.firstName} onChange={(e) => this.setState({ firstName: e.target.value })} />
-                            </FormGroup>
-                            <FormGroup>
+                            </Item>
+                            <Item>
                                 <Label>Last Name</Label>
                                 <Input type='text' value={this.state.lastName} onChange={(e) => this.setState({ lastName: e.target.value })} />
-                            </FormGroup>
-                            <FormGroup>
+                            </Item>
+                            <Item>
                                 <Label>Email</Label>
                                 <Input type='email' value={this.state.emailAddress} onChange={(e) => this.setState({ emailAddress: e.target.value })} />
-                            </FormGroup>
-                            <FormGroup>
+                            </Item>
+                            <Item>
                                 <Label>Zipcode</Label>
                                 <Input type='text' value={this.state.zipCode} onChange={(e) => this.setState({ zipCode: Number(e.target.value) })} />
-                            </FormGroup>
-                            <FormGroup>
+                            </Item>
+                            <Item>
                                 <Label>Instrument(s)</Label>
                                 <Input type='text' value={this.state.instrument} placeholder='Trumpet, Tuba' onChange={(e) => this.setState({ instrument: Array(e.target.value) })} />
-                            </FormGroup>
-                            <FormGroup>
+                            </Item>
+                            <Item>
                                 <Label>Genre(s)</Label>
                                 <Input type='text' value={this.state.genre} placeholder='Trumpet, Tuba' onChange={(e) => this.setState({ genre: Array(e.target.value) })} />
-                            </FormGroup>
-                            <FormGroup>
-                                <Label>Bio</Label>
-                                <textarea name="bio" id="bio" onChange={(e) => this.setState({ bio: e.target.value })}>{this.props.userData.bio}</textarea>
-                            </FormGroup>
-                            <FormGroup>
+                            </Item>
+                            <Item>
                                 <Label>Social Links</Label>
                                 <Input type='text' value={this.state.socialLinks} placeholder='https://twitter.com/johndoe' onChange={(e) => this.setState({ socialLinks: Array(e.target.value) })} />
-                            </FormGroup>
+                            </Item>
+                            <Item>
+                                <Label>Bio</Label>
+                                <TextArea name="bio" id="bio" onChange={(e) => this.setState({ bio: e.target.value })}>{this.props.userData.bio}</TextArea>
+                            </Item>
                                 {this.props.userData.admin === 'User' ?
-                            <FormGroup>
+                            <Item>
                                 <Label>Make Admin?</Label>
                                 <Input type='checkbox'  onClick={() => this.setState({ role: 'Admin' })} /> 
-                            </FormGroup>
+                            </Item>
                                 : 
-                            <FormGroup>
+                                <Item>
                                 <Label>Remove Admin?</Label>
                                 <Input type='checkbox'  onClick={() => this.setState({ role: 'User' })} /> 
-                            </FormGroup>
+                            </Item>
                             }
 
                             <Button type='submit'>Update</Button>
+                            </FlexDiv>
                         </Form>
                     </ModalBody>
                 </Modal>
