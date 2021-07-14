@@ -35,7 +35,7 @@ const Button2 = styled.div`
 `
 const ButtonDiv = styled.div`
     display: flex;
-    width: 55%;
+    width: 70%;
     margin: 20px auto 0;
     justify-content: space-between    
 `
@@ -146,8 +146,6 @@ genreMap(){
                 <p><strong>Location:</strong></p>
                 <p>{this.state.locData.places[0]["place name"]},{this.state.locData.places[0]["state abbreviation"]}</p>
                 <p><strong>Email:</strong></p>
-                {/* <p>{this.props.userData.emailAddress}</p> */}
-                {/* <img src={gravatarUrl(`${this.props.userData.emailAddress}`, {size: 200, default: `${defaultPic}`})} alt="" /> */}
                 <p><strong>Instrument(s):</strong></p>
                 <p>{this.instrumentMap()}</p>
                 <p><strong>Genre(s):</strong></p>

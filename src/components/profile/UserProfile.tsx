@@ -19,19 +19,21 @@ const ProfileImg = styled.img`
 `
 const ButtonDiv = styled.div`
     display: flex;
-    width: 55%;
+    width: 70%;
     margin: 20px auto 0;
     justify-content: space-between    
 `
-const Button1 = styled.div`
+const Button1 = styled.button`
     background-color: #FF9f1c;
     padding: 10px 20px;
     border-radius: 30px;
     border: none;
     color: white;
-    cursor: pointer
-`
-const Button2 = styled.div`
+    cursor: pointer;
+
+    `
+    const Button2 = styled.button`
+
     background-color: #891A1C;
     padding: 10px 20px;
     border-radius: 30px;
