@@ -16,6 +16,20 @@ const ProfileBox = styled.div`
 const ProfileImg = styled.img`
     height: calc(75px + 5vw);
     width: calc(75px + 5vw)
+    `
+const ProfileImgDiv = styled.div`
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center
+`
+const ChangeButton = styled.button`
+    background-color: #FF9f1c;
+    color: white;
+    cursor: pointer;
+    border-radius: 30px;
+    border:none;
+    margin-top: 5px
 `
 const ButtonDiv = styled.div`
     display: flex;
@@ -54,7 +68,8 @@ type AcceptedProps={
         genre: Array<string>,
         bio: string,
         socialLinks: Array<string>,
-        createdAt: string
+        createdAt: string,
+        profileimg: string,
         gigs: [
             {
                 id: number,
@@ -142,10 +157,17 @@ genreMap(){
     }
 }
 
+handleUpload(){
+
+}
+
     render(){
         return(
             <ProfileBox>
-                <ProfileImg src={defaultPic} alt="" />
+                <ProfileImgDiv>
+                <ProfileImg src={this.props.userData.profileimg} alt="" />
+                <ChangeButton>change</ChangeButton>
+                </ProfileImgDiv>
                 <h5>{this.props.userData.fullName}</h5>
                 <p><strong>Location:</strong></p>
                 <p>{this.state.locData.places[0]["place name"]},{this.state.locData.places[0]["state abbreviation"]}</p>

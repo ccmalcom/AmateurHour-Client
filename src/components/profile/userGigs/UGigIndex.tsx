@@ -166,7 +166,7 @@ export default class UGigIndex extends React.Component<AcceptedProps, GigState>{
     render(){
         return(
             <>
-                <H>Gigs</H>
+                <H>Your Gigs</H>
                 {this.state.loading ? 
                 <div>
                     <Loader type='Audio' color='#FF9F1C'/>

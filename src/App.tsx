@@ -39,7 +39,7 @@ class App extends React.Component<{}, AppState> {
 
   clearSession(){
     localStorage.clear();
-    this.setState({sessionToken: '', isUserAuthenticated: false})
+    this.setState({sessionToken: '', isUserAuthenticated: false, sessionUUID: 0, sessionRole: ''})
   }
 
   protectedViews(){

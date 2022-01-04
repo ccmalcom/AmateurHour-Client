@@ -37,6 +37,7 @@ type IndexState = {
         bio: string,
         socialLinks: Array<string>,
         createdAt: string,
+        profileimg: string,
         gigs: [
             {
                 id: number,
@@ -70,6 +71,7 @@ export default class ProfileIndex extends React.Component<AcceptedProps, IndexSt
                 bio: '',
                 socialLinks: [],
                 createdAt: '',
+                profileimg: '',
                 gigs: [
                     {
                         id: 0,
@@ -130,6 +132,7 @@ export default class ProfileIndex extends React.Component<AcceptedProps, IndexSt
             bio: '',
             socialLinks: [],
             createdAt: '',
+            profileimg: '',
             gigs: [
                 {
                     id: 0,
