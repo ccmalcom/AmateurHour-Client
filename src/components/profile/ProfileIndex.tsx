@@ -99,7 +99,7 @@ export default class ProfileIndex extends React.Component<AcceptedProps, IndexSt
 
     getUserInfo() {
         console.log('getting user info');
-        fetch(`https://ccm-amateurhour.herokuapp.com/user/view/${localStorage.userId}`, {
+        fetch(`http://localhost:8080/user/view/${localStorage.userId}`, {
             method: 'GET',
             headers: new Headers({
                 'Content-Type': 'application/json',

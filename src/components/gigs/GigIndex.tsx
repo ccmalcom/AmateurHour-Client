@@ -168,7 +168,7 @@ export default class GigIndex extends React.Component<AcceptedProps, GigState>{
 
     gigFetch() {
         this.setState({ loading: true })
-        fetch('https://ccm-amateurhour.herokuapp.com/gig/view', {
+        fetch('http://localhost:8080/gig/view', {
             method: 'GET',
             headers: new Headers({
                 'Content-Type': 'application/json',

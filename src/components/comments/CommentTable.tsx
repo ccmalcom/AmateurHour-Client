@@ -25,7 +25,7 @@ const CommentTable=(props: AcceptedProps)=>{
     
 
     const deleteComment = (commentId: number) =>{
-        fetch(`https://ccm-amateurhour.herokuapp.com/comment/delete/${commentId}`,{
+        fetch(`http://localhost:8080/comment/delete/${commentId}`,{
             method: 'DELETE',
             headers: new Headers({
                 'Content-Type': 'application/json',
@@ -36,7 +36,7 @@ const CommentTable=(props: AcceptedProps)=>{
         .then(()=>{props.gigFetch()})
     }
     const deleteCommentAdmin = (commentId: number) =>{
-        fetch(`https://ccm-amateurhour.herokuapp.com/comment/delete/${commentId}/admin`,{
+        fetch(`http://localhost:8080/comment/delete/${commentId}/admin`,{
             method: 'DELETE',
             headers: new Headers({
                 'Content-Type': 'application/json',

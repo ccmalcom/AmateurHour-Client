@@ -3,7 +3,8 @@ import logo from '../../assets/logo.png';
 import styled from 'styled-components';
 import { Label, Input, Form, FormGroup } from "reactstrap";
 import Loader from 'react-loader-spinner';
-
+import { auth } from "../../firebase";
+import { signInWithEmailAndPassword, UserCredential } from "firebase/auth";
 
 const Logo = styled.img`
     width: 20vw
@@ -53,7 +54,7 @@ const Button = styled.button`
     `
 
 type AcceptedProps = {
-    updateToken: (newToken: string, newUserId: number, newRole: string) => void,
+    updateToken: () => void,
     changeView: () => void,
 }
 
@@ -74,26 +75,24 @@ export default class Login extends React.Component<AcceptedProps, LoginState>{
             loading: false
         }
         this.handleSubmit = this.handleSubmit.bind(this)
+        this.isLoading = this.isLoading.bind(this)
     }
 
-    handleSubmit(e: FormEvent) {
+    async handleSubmit(e: FormEvent) {
         e.preventDefault()
         this.isLoading()
-        fetch('https://ccm-amateurhour.herokuapp.com/user/login', {
-            method: 'POST',
-            body: JSON.stringify({
-                user: {
-                    emailAddress: this.state.email,
-                    password: this.state.password,
-                }
-            }),
-            headers: new Headers({ 'Content-Type': 'application/json' })
+        signInWithEmailAndPassword(auth, this.state.email, this.state.password)
+        .then((userCredential: UserCredential) => {
+            // Signed in
+            const user = userCredential.user;
+            if(user){
+                this.props.updateToken();
+            } else {
+                this.showErrorBox();
+            }
         })
-            .then((res) => { if (res.status === 200) { return res.json() } else { this.showErrorBox(); this.isLoading() } })
-            // .then(console.log)
-            .then(data => this.props.updateToken(data.sessionToken, data.user.id, data.user.admin))
-            .then(this.isLoading)
-            .catch(err => console.log(err))
+        .then(this.isLoading)
+        .catch(err => console.log(err))
     }
 
     showErrorBox() {

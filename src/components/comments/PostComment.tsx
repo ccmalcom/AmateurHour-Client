@@ -36,7 +36,7 @@ export default class PostComment extends React.Component<AcceptedProps, IndexSta
 
     CommentPost(e: MouseEvent){
         e.preventDefault()
-        fetch(`https://ccm-amateurhour.herokuapp.com/comment/new`, {
+        fetch(`http://localhost:8080/comment/new`, {
             method: 'POST',
             body: JSON.stringify({
                 content: this.state.content,

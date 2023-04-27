@@ -65,7 +65,7 @@ const LoaderDiv = styled.div`
 
 
 type AcceptedProps = {
-    updateToken: (newToken: string, newUserId: number, newRole: string) => void
+    updateToken: () => void
 }
 
 type LandingState = {
@@ -93,18 +93,18 @@ class Landing extends React.Component<AcceptedProps, LandingState>{
 
 
     handleTryIt(){
-        fetch('https://ccm-amateurhour.herokuapp.com/user/login', {
+        fetch('http://localhost:8080/user/login', {
             method: 'POST',
             body: JSON.stringify({
                 user:{
-                    emailAddress: 'jdoe@gmail.com',
-                    password: 'password',
+                    emailAddress: 'jdoe@example.com',
+                    password: 'Password1',
                 }}),
                 headers: new Headers({'Content-Type': 'application/json'})
         })
         .then(res => res.json())
         // .then(console.log)
-        .then(data => this.props.updateToken(data.sessionToken, data.user.id, data.user.admin))
+        .then(data => this.props.updateToken())
         .catch(err => console.log(err))
     }
     

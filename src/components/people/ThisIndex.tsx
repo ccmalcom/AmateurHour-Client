@@ -99,7 +99,7 @@ export default class ThisIndex extends React.Component<AcceptedProps, IndexState
 
     getUserInfo() {
         console.log('getting user info');
-        fetch(`https://ccm-amateurhour.herokuapp.com/user/view/${this.props.userId}`, {
+        fetch(`http://localhost:8080/user/view/${this.props.userId}`, {
             method: 'GET',
             headers: new Headers({
                 'Content-Type': 'application/json',

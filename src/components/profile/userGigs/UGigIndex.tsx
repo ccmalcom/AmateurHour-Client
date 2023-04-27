@@ -119,7 +119,7 @@ export default class UGigIndex extends React.Component<AcceptedProps, GigState>{
     }
     gigFetch(){
         this.setState({loading: true})
-        fetch(`https://ccm-amateurhour.herokuapp.com/gig/view/user/${localStorage.userId}`, {
+        fetch(`http://localhost:8080/gig/view/user/${localStorage.userId}`, {
             method: 'GET',
             headers: new Headers({
                 'Content-Type': 'application/json',

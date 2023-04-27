@@ -43,7 +43,7 @@ type AcceptedProps = {
 const DeleteUser = (props: AcceptedProps) => {
 
     const deleteUser = () => {
-        fetch(`https://ccm-amateurhour.herokuapp.com/user/delete/`, {
+        fetch(`http://localhost:8080/user/delete/`, {
             method: 'DELETE',
             headers: new Headers({
                 'Content-Type': 'application/json',

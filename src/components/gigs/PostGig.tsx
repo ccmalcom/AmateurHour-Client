@@ -68,7 +68,7 @@ export default class PostGig extends React.Component<AcceptedProps, PostState>{
     postGig(e: FormEvent){
         e.preventDefault()
         this.props.modalPopup()
-        fetch('https://ccm-amateurhour.herokuapp.com/gig/new', {
+        fetch('http://localhost:8080/gig/new', {
             method: 'POST',
             body: JSON.stringify({
                 title: this.state.title,

@@ -24,7 +24,7 @@ export default class CommentEdit extends React.Component<AcceptedProps, EditStat
 
     commentUpdate(e: UIEvent){
         e.preventDefault()
-        fetch(`https://ccm-amateurhour.herokuapp.com/comment/edit/${this.props.comment.id}`,{
+        fetch(`http://localhost:8080/comment/edit/${this.props.comment.id}`,{
             method: 'PUT',
             body: JSON.stringify({
                 content: this.state.content

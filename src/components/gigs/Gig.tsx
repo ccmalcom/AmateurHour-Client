@@ -119,7 +119,7 @@ export default class Gig extends React.Component<AcceptedProps, GigState>{
     }
 
     deleteGig = (gig: number) => {
-        fetch(`https://ccm-amateurhour.herokuapp.com/gig/delete/${gig}`, {
+        fetch(`http://localhost:8080/gig/delete/${gig}`, {
             method: 'DELETE',
             headers: new Headers({
                 'Content-Type': 'application/json',
@@ -130,7 +130,7 @@ export default class Gig extends React.Component<AcceptedProps, GigState>{
             .then(() => this.props.gigFetch())
     }
     adminDeleteGig = (gig: number) => {
-        fetch(`https://ccm-amateurhour.herokuapp.com/gig/delete/${gig}/admin`, {
+        fetch(`http://localhost:8080/gig/delete/${gig}/admin`, {
             method: 'DELETE',
             headers: new Headers({
                 'Content-Type': 'application/json',

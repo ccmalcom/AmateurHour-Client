@@ -121,7 +121,7 @@ class ThisGigTable extends React.Component<AcceptedProps, TableState>{
         return date;
     }
     adminDeleteGig = (gig: number) => {
-        fetch(`https://ccm-amateurhour.herokuapp.com/gig/delete/${gig}/admin`, {
+        fetch(`http://localhost:8080/gig/delete/${gig}/admin`, {
             method: 'DELETE',
             headers: new Headers({
                 'Content-Type': 'application/json',

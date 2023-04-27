@@ -22,7 +22,7 @@ const CommentTable=(props: AcceptedProps)=>{
     
 
     const deleteComment = (commentId: number) =>{
-        fetch(`https://ccm-amateurhour.herokuapp.com/comment/delete/${commentId}`,{
+        fetch(`http://localhost:8080/comment/delete/${commentId}`,{
             method: 'DELETE',
             headers: new Headers({
                 'Content-Type': 'application/json',

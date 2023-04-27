@@ -46,7 +46,7 @@ export default class AdminGigEdit extends React.Component<AcceptedProps, EditSta
     gigUpdate(e: FormEvent){
         e.preventDefault()
         this.props.editModal()
-        fetch(`https://ccm-amateurhour.herokuapp.com/gig/edit/${this.props.gigToEdit.id}/admin`,{
+        fetch(`http://localhost:8080/gig/edit/${this.props.gigToEdit.id}/admin`,{
             method: 'PUT',
             body: JSON.stringify({
                 title: this.state.title,

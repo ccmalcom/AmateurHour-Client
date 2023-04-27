@@ -129,7 +129,7 @@ export default class PeopleIndex extends React.Component<AcceptedProps, PeopleSt
     
 
     fetchPeople() {
-        fetch(`https://ccm-amateurhour.herokuapp.com/user/view`, {
+        fetch(`http://localhost:8080/user/view`, {
             method: 'GET',
             headers: new Headers({
                 'Content-Type': 'application/json',

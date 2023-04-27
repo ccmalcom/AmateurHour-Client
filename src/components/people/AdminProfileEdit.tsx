@@ -101,7 +101,7 @@ export default class AdminProfileEdit extends React.Component<AcceptedProps, Edi
     profileUpdate(e: FormEvent) {
         e.preventDefault()
         this.props.editModal()
-        fetch(`https://ccm-amateurhour.herokuapp.com/user/edit/${this.props.userData.id}/admin`, {
+        fetch(`http://localhost:8080/user/edit/${this.props.userData.id}/admin`, {
             method: 'PUT',
             body: JSON.stringify({
                 firstName: this.state.firstName,

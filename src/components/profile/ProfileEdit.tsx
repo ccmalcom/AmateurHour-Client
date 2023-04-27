@@ -84,7 +84,7 @@ export default class ProfileEdit extends React.Component<AcceptedProps, EditStat
     profileUpdate(e: FormEvent) {
         e.preventDefault()
         this.props.editModal()
-        fetch(`https://ccm-amateurhour.herokuapp.com/user/edit`, {
+        fetch(`http://localhost:8080/user/edit`, {
             method: 'PUT',
             body: JSON.stringify({
                 firstName: this.state.firstName,
